@@ -1,0 +1,172 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{tex/codeblocks}
+\usepackage{booktabs}
+\usepackage{array}
+
+\renewcommand{\arraystretch}{1.25}
+
+\begin{document}
+
+\section{The C++ Build Process}
+
+\noindent
+Recall that C++ is a compiled language.
+This means its source code must be translated into machine-readable instructions, typically resulting in an executable file.
+The process by which this translation occurs is known as the \textbf{build process}, which consists of three major stages: preprocessing, compilation, and linking:
+
+\[\texttt{.cpp} \rightarrow \boxed{\textrm{Preprocessor}} \rightarrow \boxed{\textrm{Compiler}} \rightarrow \boxed{\textrm{Linker}} \rightarrow \texttt{exe}\]
+
+\subsection{The Preprocessor}
+
+\noindent
+The preprocessor's job is to edit the source code text according to a set of \textbf{preprocessor directives}.
+These directives are special instructions that guide the preprocessor before actual compilation begins.
+All preprocessor directives begin with the \inlinecxx{#} symbol and are processed line-by-line.
+
+\subsubsection{Text Replacement \inlinecxx{\#define}}
+
+\noindent
+The \inlinecxx{#define} directive is used to define macros.
+In C/C++, a \textbf{macro} is a symbol that the preprocessor replaces with a value, expression, or code snippet.
+\inlinecxx{#define} instructs the preprocessor to replace every occurrence of a defined symbol with a corresponding replacement string.
+This allows you to define constants without using variables:
+
+\begin{lstlisting}[style=cxx]
+#include <iostream>
+
+#define PI 3.14159 // replace 'PI' with '3.14159'
+
+int main()
+{
+    std::cout << PI << std::endl;
+}
+\end{lstlisting}
+
+\noindent
+In the code above, the preprocessor replaces every instanc eof \inlinecxx{PI} with \inlinecxx{3.14159}.
+It is important to note that the preprocessor has no understanding of C++ semantics--it merely performs straightforward text substitution.
+This means it does not perform any type checking or validation, which can lead to unexpected behavior if not used carefully.
+
+\vspace{1em}
+\noindent
+The \inlinecxx{#define} directive can also be used to create function-like macros that accept arguments:
+
+\begin{lstlisting}[style=cxx]
+#include <iostream>
+
+#define SQUARE(x) x * x
+#define MAX(a, b) a > b ? a : b
+
+int main()
+{
+    std::cout << SQUARE(5) << std::endl;
+    std::cout << MAX(2, 3) << std::endl;
+}
+\end{lstlisting}
+
+\noindent
+These function like macros are extremely prone to unexpected behavior.
+Consider the following example:
+
+\begin{lstlisting}[style=cxx]
+#include <iostream>
+
+#define SQUARE(x) x * x
+
+int main()
+{
+    int a { 2 }, b { 4 };
+    std::cout << SQUARE(a + b) << std::endl;
+}
+\end{lstlisting}
+
+\begin{terminal}
+$ ./a.out
+14
+\end{terminal}
+
+\begin{explanation}
+\end{explanation}
+
+\subsection{Conditional Compilation \inlinecxx{\#if}, \inlinecxx{\#ifdef}}
+
+\noindent
+The preprocessor can also be used to conditionally pass code to the compiler.
+The \inlinecxx{#if} directive passes the following block of code to the compiler if the given condition is true:
+
+\begin{lstlisting}[style=cxx]
+#define CONTROL 1
+
+#if (CONTROL == 1)
+    // do something...
+#endif
+\end{lstlisting}
+
+\noindent
+The condition passed must be made up of preprocesor macros so that the preprocesor can understand it.
+The block must be terminated with the \inlinecxx{#endif} directive.
+\inlinecxx{#elif} and \inlinecxx{#else} can be used to create preprocessor branching behavior:
+
+\begin{lstlisting}[style=cxx]
+#define CONTROL 1
+
+#if (CONTROL == 0)
+    // do something...
+#elif (CONTROL == 1)
+    // do something else...
+#else
+    // do something else...
+#endif
+\end{lstlisting}
+
+\noindent
+\inlinecxx{#ifdef} can be used to conditionally evaluate if a macro is defined:
+
+\begin{lstlisting}[style=cxx]
+#define MACRO
+
+#ifdef MACRO
+    // do something...
+#endif
+\end{lstlisting}
+
+\noindent
+Similarly, \inlinecxx{#ifndef} can be used to execute code if a macro is \textbf{not} defined:
+
+\begin{lstlisting}[style=cxx]
+#ifndef MACRO
+    // do something...
+#endif
+\end{lstlisting}
+
+\pagebreak
+
+\begin{table}[ht]
+    \centering
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabular}{>{\raggedright\arraybackslash}p{0.2\textwidth} >{\raggedright\arraybackslash}p{0.6\textwidth} >{\raggedright\arraybackslash}p{0.15\textwidth}}
+        \toprule[1.5pt]
+        \textbf{Directive} & \textbf{Description} & \textbf{Section} \\
+        \midrule
+        {\inlinecxx{#define}}   & Defines a macro, which can be an object-like macro or a function-like macro. & 0 \\
+        {\inlinecxx{#undef}}    & Undefines a previously defined macro. &  \\
+        {\inlinecxx{#include}}  & Includes the contents of a specified file. &  \\
+        {\inlinecxx{#if}}       & Begins a conditional block; code within is compiled only if the condition is true. &  \\
+        {\inlinecxx{#elif}}     & Specifies an alternate condition within a {\inlinecxx{#if}} block. &  \\
+        {\inlinecxx{#else}}     & Specifies the code to be compiled if none of the preceeding {\inlinecxx{#if}} or {\inlinecxx{\#elif}} checks are true. &  \\
+        {\inlinecxx{#ifdef}}    & Checks if a macro is defined; code within is compiled only if the macro is defined. &  \\
+        {\inlinecxx{#ifndef}}   & Checks if a macro is not defined; code within is compiled only if the macro is not defined. &  \\
+        {\inlinecxx{#elifdef}}  &  &  \\
+        {\inlinecxx{#elifndef}} &  &  \\
+        {\inlinecxx{#endif}}    & Ends a conditional compilation block. &  \\
+        {\inlinecxx{#error}}    & Generates a compilation error with a specified message. &  \\
+        {\inlinecxx{#warning}}  &  &  \\
+        {\inlinecxx{#line}}     &  &  \\
+        {\inlinecxx{#pragma}}   &  &  \\
+        \bottomrule[1.5pt]
+    \end{tabular}
+\end{table}
+
+\end{document}

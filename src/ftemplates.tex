@@ -1,0 +1,190 @@
+\section{Function Templates}
+
+\noindent
+To understand what a \inlinecxx{template} is, it's helpful to first grasp why they are used.
+Consider how you might implement a function, \inlinecxx{max()}, that takes two arguments and returns the greater of the two.
+This function is general enough to work on any type that supports the comparison \inlinecxx{operator>}.
+Here's an implementation for a specific type, like \inlinecxx{int}:
+
+\begin{lstlisting}[style=cxx]
+int max(int a, int b)
+{
+    return (a > b ? a : b);
+}
+\end{lstlisting}
+
+\noindent
+Now, imagine you need to implement the same \inlinecxx{max()} function for \inlinecxx{float} values:
+
+\begin{lstlisting}[style=cxx]
+float max(float a, float b)
+{
+    return (a > b ? a : b);
+}
+\end{lstlisting}
+
+\noindent
+And for \inlinecxx{char} values:
+
+\begin{lstlisting}[style=cxx]
+char max(char a, char b)
+{
+    return (a > b ? a : b);
+}
+\end{lstlisting}
+
+\noindent
+At this point, the problem becomes clear: you are duplicating the same logic for every data type.
+This redundancy clutters the codebase and makes it difficult to build a reusable library for generic functionality.
+Consider a custom class that can be compared:
+
+\begin{lstlisting}[style=cxx]
+class YourClass
+{
+public:
+    bool operator>(const YourClass& c);
+    // ...
+};
+\end{lstlisting}
+
+\noindent
+No library in the world can create generic functionality such as \inlinecxx{max()} that works for \inlinecxx{YourClass}--after all, they don't even know it exists.
+Instead of shouting from the rooftops, pleading with the library architects to recognize the sheer brilliance of \inlinecxx{YourClass}, and hoping they'll bless us with support in the next version, we can take matters into our own hands with a more flexible approach.
+
+\begin{lstlisting}[style=cxx]
+template<class T>
+T max(T a, T b)
+{
+    return (a > b ? a : b);
+}
+\end{lstlisting}
+
+\noindent
+Behold the almighty \inlinecxx{template}.
+Templates allow us to write a single function that works with any type \inlinecxx{T}, as long as \inlinecxx{T} supports the operations we perform on it.
+When we declare \inlinecxx{template<class T>}, we are instructing the compiler to generate a \textbf{generic function}--a blueprint that can operate on any datatype \inlinecxx{T}.
+We can explicitly specify \inlinecxx{T} when calling the function:
+
+\begin{lstlisting}[style=cxx]
+#include <iostream>
+
+template<class T>
+T max(T a, T b) { return (a > b ? a : b); }
+
+int main()
+{
+    int   a { 32 },  b { 64 };
+    char  p { 'p' }, q { 'q' };
+    float x { 1.5 }, y { 1.0 };
+
+    std::cout << max<int>(a, b) << std::endl;   // T = int
+    std::cout << max<char>(p, q) << std::endl;  // T = char
+    std::cout << max<float>(x, y) << std::endl; // T = float
+}
+\end{lstlisting}
+
+\begin{terminal}[]
+$ ./a.out
+64
+q
+1.5
+\end{terminal}
+
+\subsection{Template Instantiation}
+
+\noindent
+When you declare a template function like \inlinecxx{max()}, you are not creating a function.
+Instead, you're \textbf{defining a blueprint} that the compiler uses to create functions as needed.
+This process is called \textbf{template instantiation}.
+A function is only instantiated when you call it with a specific type, prompting the compiler to generate a corresponding version.
+We can demonstrate this by examining the compiler output of two source files:
+
+\begin{lstlisting}[style=cxx]
+// filea.cpp
+template<class T>
+T abs(T t)
+{
+    return (t >= 0 ? t : -t);
+}
+
+int main() {}
+\end{lstlisting}
+
+\begin{lstlisting}[style=cxx]
+// fileb.cpp
+int main() {}
+\end{lstlisting}
+
+\begin{terminal}[]
+$ clang++ -S filea.cpp -o filea.s
+$ clang++ -S fileb.cpp -o fileb.s
+$ diff filea.s fileb.s | wc
+       0       0       0
+\end{terminal}
+
+\begin{explanation}
+\noindent
+In the above example, we have two source files:
+
+\begin{enumerate}
+    \item \texttt{filea.cpp} defines a template function \inlinecxx{abs}, but it is never called.
+    \item \texttt{fileb.cpp} is a minimal C++ program containing only \inlinecxx{main()}.
+\end{enumerate}
+
+\noindent
+Since no calls to \inlinecxx{abs()} are made in \texttt{filea.cpp}, the compiler does not generate any machine code for it.
+When we compile both files into assembly using the \texttt{-S} flag and compare the outputs with \inlinesh{diff}, they are identical. This confirms that template code is not instantiated until it is used.
+\end{explanation}
+
+\noindent
+Template instantiation happens at compile-time when the function is called, and a unique function definition is generated for each combination of template parameters.
+The beauty of this approach lies in its efficiency—you only pay for what you use.
+If your program only requires a \inlinecxx{max()} function for \inlinecxx{int} and \inlinecxx{char}, the compiler generates code only for those types, leaving other potential instantiations unused.
+This selective generation avoids unnecessary bloat, keeping both your compiled binaries smaller and your compile times faster.
+
+\subsubsection{Implicit Instantiation}
+
+\noindent
+When you use a template function, the compiler must create a specific version of that function for the given type.
+If the required instance does not already exist, the compiler will generate it through a process called \textbf{implicit instantiation}.
+In this process, the compiler deduces the template parameter \inlinecxx{T} based on the types of the function arguments.
+
+\begin{lstlisting}[style=cxx]
+// implicit.cpp
+template<class T>
+T max(T a, T b) { return (a > b ? a : b); }
+
+int main()
+{
+    int x { max(5, 6) };        // max<int>(int, int)
+    double y { max(5.0, 6.0) }; // max<double>(double, double)
+    char z { max('5', '6') };   // max<char>(char, char)
+}
+\end{lstlisting}
+
+\noindent
+Notice that we don't explicitly inform the compiler which version of \inlinecxx{max()} to call.
+Instead, the compiler \textbf{deduces} the template parameter \inlinecxx{T} from the function arguments.
+We can confirm that the compiler generates separate function instances by inspecting the assembly output:
+
+\vspace{0.5em}
+\begin{terminal}
+$ clang++ -std=c++23 -S implicit.cpp
+$ cat implicit.s | grep "max.*:"
+__Z3maxIiET_S0_S0_:                     ; @_Z3maxIiET_S0_S0_
+__Z3maxIdET_S0_S0_:                     ; @_Z3maxIdET_S0_S0_
+__Z3maxIcET_S0_S0_:                     ; @_Z3maxIcET_S0_S0_
+\end{terminal}
+
+\begin{explanation}
+In \texttt{implicit.cpp}, we instantiate the template function \inlinecxx{max()} with three template arguments: \inlinecxx{int}, \inlinecxx{double}, and \inlinecxx{char}.
+Using the \texttt{-S} flag, we produce assembly output in \texttt{implicit.s}.
+By searching for functions containing \inlinesh{"max"} using \inlinesh{grep}, we find three separate definitions.
+The compiler encodes type information into the function name through \textbf{name mangling}.
+The identifiers \texttt{i}, \texttt{d}, and \texttt{c} in the mangled names correspond to \inlinecxx{int}, \inlinecxx{double}, and \inlinecxx{char}, respectively.
+This confirms that the compiler has generated a unique function instance for each type.
+\end{explanation}
+
+\subsection{Explicit Instantiation}
+
+

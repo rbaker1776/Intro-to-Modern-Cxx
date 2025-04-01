@@ -1,0 +1,5 @@
+$ clang++ -std=c++23 main.cpp lib.cpp
+Undefined symbols for architecture arm64:
+  "int max<int>(int, int)", referenced from:
+      _main in main-cbf51c.o
+ld: symbol(s) not found for architecture arm64

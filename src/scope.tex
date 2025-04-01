@@ -1,0 +1,78 @@
+\section{Scope}
+
+\noindent
+A variable's \textbf{scope} is the region of the program where its declaration is visible.
+Every variable declaration occurs within some scope which determines that variable's lifetime and visibility.
+Every program has a global scope, which encompasses the entire program.
+Narrower scopes are typically denoted with curly braces \inlinecxx{\{\}} in C/C++:
+
+\begin{lstlisting}[style=cxx]
+void foo()                          //              //
+{                                   // foo()'s      //
+    // do foo things...             // scope        //
+}                                   //              //
+                                                    //
+int main()                          //              //
+{                                   //              // global
+    {                //             //              // scope
+        int x { 0 }; // scope A     //              //
+    }                //             // main()'s     //
+                                    // scope        //
+    {                //             //              //
+        int x { 1 }; // scope B     //              //
+    }                //             //              //
+}                                   //              //
+\end{lstlisting}
+
+\noindent
+In the above program, notice that \inlinecxx{x} is declared twice within \inlinecxx{main()}.
+Typically, this would cause a duplicate symbol error.
+In this case, however, the declarations occur within disjoint scopes, meaning the compiler is able to discern between them.
+At any point in the program, the compiler recognizes symbols within the current scope as well as any enclosing scope.
+
+\subsection{Global Scope}
+
+\noindent
+Global scope refers to the scope outside of any class, function, or namespace.
+Variables declared within global scope are called \textbf{global variables} and can be accessed from anywhere in the program.
+Global variables are stored in static memory ($\S$ \ref{NULLREF}) and their lifetime is the entire duration of the program.
+
+\begin{lstlisting}[style=cxx]
+#include <iostream>
+
+int g { 42 };
+
+void foo()
+{
+    std::cout << g << std::endl; // access global from foo()
+}
+
+int main()
+{
+    std::cout << g << std::endl; // access global from main()
+    foo();
+}
+\end{lstlisting}
+
+\subsection{Local Scope}
+
+\noindent
+Local scope refers to the region within a block of code defined by curly braces \inlinecxx{\{\}}.
+This scope limits the variable's visibility and lifetime to that specific block:
+
+\begin{lstlisting}[style=cxx]
+#include <iostream>
+
+void foo()
+{
+    int local { 10 };
+    std::cout << local << std::endl;
+}
+
+int main()
+{
+    std::cout << local << std::endl; // error!
+}
+\end{lstlisting}
+
+\subsection{Local Scope}

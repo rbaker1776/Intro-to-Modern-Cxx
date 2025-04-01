@@ -1,0 +1,7 @@
+#ifndef HEADER_H_B36F8AC98EB44F30
+#define HEADER_H_B36F8AC98EB44F30
+
+void a();
+void b();
+
+#endif // HEADER_H_B36F8AC98EB44F30

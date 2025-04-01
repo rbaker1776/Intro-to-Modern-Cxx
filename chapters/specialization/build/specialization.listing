@@ -1,0 +1,7 @@
+$ clang++ -std=c++23 -c specialization.cpp
+$ objdump -tC specialization.o
+SYMBOL TABLE:
+0000000000000000 l F __TEXT,__text ltmp0
+0000000000000020 l O __LD,__compact_unwind ltmp1
+0000000000000000 g F __TEXT,__text int max<int>(int, int)
+0000000000000018 g F __TEXT,__text _main

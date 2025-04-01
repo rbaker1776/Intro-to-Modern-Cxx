@@ -1,0 +1,215 @@
+\RequirePackage[table,dvipsnames,svgnames,x11names]{xcolor}
+\RequirePackage{listings}
+\RequirePackage{fontspec}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[many]{tcolorbox}
+\RequirePackage{mdframed}
+\RequirePackage{amsmath}
+\RequirePackage{booktabs}
+\RequirePackage{array}
+\RequirePackage{nameref}
+\RequirePackage{longtable}
+
+\tcbuselibrary{listings}
+
+\def\rootdir{/Users/ryanbaker/cxxsaturdays}
+
+
+% ----------------------------------------------------------------------------------------------------------------------
+% DEFINE DOCUMENT FONTS
+% ----------------------------------------------------------------------------------------------------------------------
+
+\RequirePackage{kpfonts,baskervald}
+
+\setmonofont[
+    Scale = 0.84375,
+    Path = \rootdir/tex/fonts/,
+    Extension = .ttf,
+    UprightFont = *-Regular,
+    ItalicFont = *-Italic,
+    BoldFont = *-SemiBold,
+]{JetBrainsMono}
+
+
+% ----------------------------------------------------------------------------------------------------------------------
+% DEFINE LISTING STYLES
+% ----------------------------------------------------------------------------------------------------------------------
+
+\definecolor{LightGray}{RGB}{245,247,250}
+\definecolor{MidGray}{RGB}{180,182,190}
+\definecolor{Parchment}{RGB}{252,246,229}
+
+\lstset
+{
+	backgroundcolor=\color{LightGray}, % listing background color
+	basicstyle=\ttfamily,              % font family for default
+	showspaces=false,				   % don't underscore spaces
+	showtabs=false,					   % don't underscore tabs
+	showstringspaces=false,			   % don't underscore spaces in strings
+	breakatwhitespace=true,			   % go to newline at whitespace character
+	breaklines=true,				   % break lines automatically to avoid overflow
+	frame=single,    				   % add a border to the listing
+    rulecolor=\color{MidGray},  	   % border color
+	xleftmargin=0pt,			       % left text margin
+	xrightmargin=0pt,				   % right text margin
+	framexleftmargin=0pt,			   % left frame margin, should equal left text margin
+	framexrightmargin=0pt,			   % right frame margin, should equal right text margin
+	framesep=5pt,					   % padding between frame and text
+	tabsize=4,						   % "\t" == "    "
+	aboveskip=10pt,					   % skip _ space above the listing
+	belowskip=10pt,					   % skip _ space below the listing
+}
+
+
+% ----------------------------------------------------------------------------------------------------------------------
+% C++ CODE STYLE
+% ----------------------------------------------------------------------------------------------------------------------
+
+\lstdefinestyle{cxxstyle}
+{
+	% import listings' C++ keywords and delimiters
+	language=C++,
+	% set styles for comments and strings
+	commentstyle=\color{CadetBlue}\itshape,
+	stringstyle=\color{ForestGreen},
+	% setup line numbering
+	numbers=left,
+	numbersep=5pt,
+	numberstyle=\color{MidGray}\footnotesize\ttfamily,
+	% re-align the margins because line numbering takes up space
+	xleftmargin=5pt,
+	xrightmargin=0pt,
+    aboveskip=0pt,
+    belowskip=0pt,
+    frame=none,
+	% setup keywords highlighting
+	% keywords group [n] will receive keywordstyle group [n]
+	keywords=[1]{}, % default keywords and preprocessor macros
+	keywords=[2]{auto,bool,char,double,float,int,long,short,signed,unsigned,void},
+	keywords=[3]{asm,catch,class,concept,const,consteval,constexpr,constinit,continue,decyltype,default,do,enum,explicit,extern,for,friend,goto,inline,mutable,namespace,noexcept,override,private,protected,public,register,requires,return,static,struct,template,try,throw,typedef,typeid,typename,union,using,virtual,volatile,while},
+	keywords=[4]{if,case,else,switch},
+	keywords=[5]{and,and_eq,bitor,bitand,compl,delete,or,or_eq,new,not,not_eq,sizeof,xor,xor_eq},
+	keywords=[6]{NULL,false,nullptr,true},
+	keywords=[7]{this},
+    keywords=[8]{operator},
+	keywordstyle=[1]\color{WildStrawberry},
+	keywordstyle=[2]\color{BurntOrange},
+	keywordstyle=[3]\color{Mulberry},
+	keywordstyle=[4]\color{Mulberry}\itshape,
+	keywordstyle=[5]\color{Cerulean},
+	keywordstyle=[6]\color{RedOrange},
+	keywordstyle=[7]\color{Red},
+	keywordstyle=[8]\color{MidnightBlue},
+}
+
+
+\newtcblisting{cxx}[1]
+{
+    listing engine=listings,
+    listing only,
+    listing options={style=cxxstyle},
+    colback=LightGray,
+    colbacktitle=MidGray,
+    colframe=MidGray,
+    boxrule=1pt,
+    width=\linewidth + 10pt, center,
+    title={#1},
+    fonttitle=\centering\itshape\ttfamily\color{Black},
+    breakable,
+    arc=4pt,
+    after=\vspace{5pt},
+}
+
+
+% ----------------------------------------------------------------------------------------------------------------------
+% TERMINAL STYLE
+% ----------------------------------------------------------------------------------------------------------------------
+
+\lstdefinestyle{termstyle}
+{
+    backgroundcolor=\color{Parchment},
+    alsoletter={/.+},
+    keywords=[1]{$},
+    keywords=[2]{./a.out,clang++,g++,diff,wc,cat,grep,objdump},
+    sensitive=true,
+    keywordstyle=[1]\color{Tan},
+    keywordstyle=[2]\color{PineGreen},
+    stringstyle=\color{Blue},
+    frame=none,
+	aboveskip=0pt,
+	belowskip=0pt,
+}
+
+\newtcblisting{terminal}[1][]
+{
+    listing engine=listings,
+    listing only,
+    listing options={style=termstyle},
+    colback=Parchment,
+    colbacktitle=Black,
+    colframe=Black,
+    boxrule=0.5pt,
+    width=\linewidth + 10pt, center,
+    title=Terminal,
+    fonttitle=\centering\bfseries\ttfamily,
+    breakable,
+    arc=4pt,
+    after=\vspace{5pt},
+    #1
+}
+
+
+% ----------------------------------------------------------------------------------------------------------------------
+% EXPLANATION STYLE
+% ----------------------------------------------------------------------------------------------------------------------
+
+\newenvironment{explanation}
+{
+    \begin{mdframed}
+    [
+        linecolor=CadetBlue,
+        linewidth=3pt,
+        backgroundcolor=CadetBlue!10,
+        topline=false, rightline=false, bottomline=false,
+        innertopmargin=8pt,
+        innerbottommargin=8pt,
+        innerrightmargin=15pt,
+        innerleftmargin=12pt,
+        %font=\color{CadetBlue!160},
+    ]
+}
+{
+    \end{mdframed}
+}
+
+
+% ----------------------------------------------------------------------------------------------------------------------
+% ADVICE STYLE
+% ----------------------------------------------------------------------------------------------------------------------
+
+\newenvironment{advice}
+{
+    \begin{mdframed}
+    [
+        linecolor=RedOrange,
+        linewidth=3pt,
+        backgroundcolor=RedOrange!10,
+        topline=false, rightline=false, bottomline=false,
+        innertopmargin=8pt,
+        innerbottommargin=8pt,
+        innerrightmargin=15pt,
+        innerleftmargin=12pt,
+        %font=\color{CadetBlue!160},
+    ]
+}
+{
+    \end{mdframed}
+}
+
+
+% ----------------------------------------------------------------------------------------------------------------------
+% INLINE CODE COMMANDS
+% ----------------------------------------------------------------------------------------------------------------------
+
+\newcommand{\inlinecxx}[1]{\lstinline[style=cxxstyle,escapechar=|]|#1|}
+\newcommand{\inlinesh}[1]{\texttt{\lstinline[style=termstyle]|#1|}}

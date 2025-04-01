@@ -1,0 +1,6 @@
+#ifndef FOO_H_BAF5799CF6CFEC03
+#define FOO_H_BAF5799CF6CFEC03
+
+void foo();
+
+#endif // FOO_H_BAF5799CF6CFEC03

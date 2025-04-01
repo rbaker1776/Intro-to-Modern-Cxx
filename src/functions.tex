@@ -1,0 +1,196 @@
+\section{Functions}
+
+\noindent
+A \textbf{function} is a reusable block of code designed to perform a specific task.
+Instead of writing the same code repeatedly, functions let us define it once and reuse it as needed.
+This approach keeps our codebase cleaner and easier to maintain.
+Proper use of functions also make programs more readable by clearly expressing the programmer's intent.
+Consider the following program:
+
+\begin{lstlisting}[style=cxx]
+#include <iostream>
+
+int main()
+{
+    const double F { 98.6 };
+    std::cout << ((F - 32.0) * 5.0 / 9.0) << std::endl;
+}
+\end{lstlisting}
+
+\noindent
+If you're quick to recognize scientific formulas, you'll notice that this program performs a Farenheit-to-Celsius conversion.
+However, there are a few minor issues with it.
+First, to the non-formulae recognizing masses, the program's purpose is obscure.
+Second, it does not adapt well to maintenance or extension.
+Consider how the program looks when we perform multiple conversions:
+
+\begin{lstlisting}[style=cxx]
+#include <iostream>
+
+int main()
+{
+    double F { 98.6 };
+    std::cout << ((F - 32.0) * 5.0 / 9.0) << std::endl;
+
+    F = 32.0; // we had to remove 'const' to reassign to 'F'
+    std::cout << ((F - 32.0) * 5.0 / 9.0) << std::endl;
+
+    F = 3038.0; // melting point of human bone
+    std::cout << ((F - 32.0) * 5.0 / 9.0) << std::endl;
+
+    F = -166.0 // Jupiter's surface temperature
+    std::cout << ((F - 32.0) * 5.0 / 9.0) << std::endl;
+}
+\end{lstlisting}
+
+\noindent
+The above program is needlessly lengthy and suffers from obscurity.
+It is also rather difficult to maintain in the event that we need to change the exact nature of our computation.
+But all is not lost.
+Notice that the logic on lines 5-6, 8-9, 11-12, and 14-15 is identical.
+This makes it an ideal candidate to be extracted into a function.
+
+\subsection{Declaring and Defining Functions}
+
+\noindent
+Building upon the motivation described above, we will design a function called \inlinecxx{F_to_C()} to perform a Farenheit-to-Celsius conversion.
+
+\begin{advice}
+Naming things is one of the great unsolved problems of computer science.
+It is always smart to name your functions according to their job.
+An ideal function name makes the function's purpose clear to the reader.
+\end{advice}
+
+\noindent
+The first thing to consider when designing a function in C/C++ is the data type that it will {return}, its \textbf{return type}.
+For example, a function that calculates the sum of two integers is likely to return an integer.
+Because \inlinecxx{F_to_C()} returns a real number value, its return type will be \inlinecxx{double}.
+\begin{lstlisting}[style=cxx]
+// write the function's return type before its name
+double F_to_C();
+\end{lstlisting}
+
+\noindent
+\inlinecxx{F_to_C()} needs to accept as input a real number Farenheit value to convert.
+In C/C++, function input arguments are specified as a comma separated list of types and names.
+
+\begin{lstlisting}[style=cxx]
+double F_to_C(double F);
+\end{lstlisting}
+
+\noindent
+The above is a valid \textit{function declaration}. Recall that variable initialization can be split into declaration and definition. To \textit{define} a function is to write its body:
+
+\begin{lstlisting}[style=cxx]
+void print_divmod(int p, int q)
+{
+	int d { p / q };
+	int r { p % q };
+    std::cout << p << " / " << q << " = " << d;
+    std::cout << " remainder " << r << '\n';
+}
+\end{lstlisting}
+
+\subsection{Calling Functions}
+
+\noindent
+To call a function, we use the function call operator \inlinecxx{()}:
+
+\begin{lstlisting}[style=cxx]
+// ... print_divmod() defined above
+
+int main()
+{
+    print_divmod(55, 10);
+    print_divmod(40, 17);
+    print_divmod(144, 1000);
+}
+\end{lstlisting}
+
+\noindent
+If the function has a return type, we use the \inlinecxx{return} keyword to return a piece of data back to the caller. The output of the function can then be assigned to a variable:
+
+\begin{lstlisting}[style=cxx]
+#include <iostream>
+
+double mean(double a, double b) { return (a + b) / 2.0; }
+
+int main()
+{
+    double avg { mean(10, 20) };
+    std::cout << avg << std::endl;
+}
+\end{lstlisting}
+
+\subsection{Function Arguments}
+
+\noindent
+By default in C++, arguments are passed as \textit{copies} into functions.
+This means that the memory occupied by the variable passed is \textbf{not} the same as the memory occupied by the variable recieved.
+Instead, a copy of the variable is made and passed to the function.
+We can demonstrate this fact as follows:
+
+\begin{lstlisting}[style=cxx]
+#include <iostream>
+
+void foo(int x)
+{
+    x = 0; // reassign 'x' to 0
+}
+
+i
+nt main()
+{
+    int x { 10 };
+    foo(x); call foo() with x
+    std::cout << x << std::endl;
+}
+\end{lstlisting}
+
+\begin{terminal}
+./a.out
+10
+\end{terminal}
+
+\noindent
+In the above program, we pass a variable into a fucntion that appears to modify it.
+However, the original variable remains unchanged.
+This is because the variable was \textit{passed by copy} to the function.
+
+\subsection{Function Signatures}
+
+\noindent
+A foundational concept relating to functions in C/C++ is a \textit{function signature}.
+Every function has a signature.
+A funciton's signature is made up of its name and argument types (and its surrounding \inlinecxx{namespace}), and it serves as a unique identifier by which the compiler can refer to the function.
+Because the function argument types are a part of its signature, we can define two functions with the same name but different arguments:
+
+\begin{lstlisting}[style=cxx]
+int add(int x, int y);
+int add(int x, int y, int z);
+double add(double x, double y);
+\end{lstlisting}
+
+\noindent
+The compiler will not get confused about which function we are refering to because it can deduce pased on the arguments passed:
+
+\begin{lstlisting}[style=cxx]
+#include <iostream>
+
+int add(int x, int y)          { return x + y; }
+int add(int x, int y, int z)   { return x + y + z; }
+double add(double x, double y) { return x + y; }
+
+int main()
+{
+    int i { 10 };
+    double d { 7 };
+
+    std::cout << add(i, i) << std::endl;
+    std::cout << add(i, i, i) << std::endl;
+    std::cout << add(d, d) << std::endl;
+}
+\end{lstlisting}
+
+\noindent
+This is known as function overloading. The clumsy nature of the above code provides basic motivation for \textit{templates}.

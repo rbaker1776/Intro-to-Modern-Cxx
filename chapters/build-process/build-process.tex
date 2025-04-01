@@ -1,0 +1,897 @@
+\documentclass[12pt]{article}
+
+\usepackage{/Users/ryanbaker/cxxsaturdays/tex/preamble}
+
+\begin{document}
+
+\tableofcontents
+
+\pagebreak
+
+\section{The Build Process}
+
+\noindent
+Recall that C++ is a compiled language.
+This means its source code must be translated into machine instructions before execution.
+This translation occurs through a sequence of steps collectively known as the \textbf{build process}, which consists of three major stages: \textbf{preprocessing}, \textbf{compilation}, and \textbf{linking}.
+
+\[\texttt{.cpp} \rightarrow \boxed{\textrm{Preprocessor}} \rightarrow \boxed{\textrm{Compiler}} \rightarrow \boxed{\textrm{Linker}} \rightarrow \texttt{exe}\]
+
+\noindent
+Each stage transforms the code in a distinct way, producing intermediate outputs that can be examined to gain insights into the compilation process.
+In this section, we will explore how these stages work, what they produce, and how we can analyze them to better understand our code.
+
+\subsection{The Preprocessor}
+
+The first stage of the build process is preprocessing.
+The preprocessor's job is to edit the source code text according to a set of \textbf{preprocessor directives}.
+Preprocessor directives begin with the \inlinecxx{#} symbol and are processed line-by-line before compilation begins.
+A comprehensive list of preprocessor directives and their definitions can be found in on page \pageref{tab:preprocessor-directives}.
+
+\subsubsection{Text Replacement \inlinecxx{\#define}}
+\label{sec:text-replacement}
+
+\noindent
+The \inlinecxx{#define} directive is used to define macros.
+A \textbf{macro} is a symbol that the preprocessor replaces with a value, expression, or code snippet.
+\inlinecxx{#define} instructs the preprocessor to replace every occurrence of a defined symbol with its corresponding replacement string.
+This, for example, allows you to define preprocessor constants:
+
+\begin{cxx}{}
+#include <iostream>
+
+#define PI 3.14159
+
+int main()
+{
+	std::cout << PI << std::endl; // prints 3.14159
+}
+\end{cxx}
+
+\noindent
+In the code above, the preprocessor replaces every instance of \inlinecxx{PI} with \inlinecxx{3.14159}.
+However, it's crucial to remember that the preprocessor does not understand C++ semantics--it simply performs text substitution.
+This lack of type checking or validation can lead to unexpected behavior if macros are not used carefully.
+
+\vspace{1em}
+\noindent
+Additionally, \inlinecxx{#define} can be used to define macros without a replacement string.
+In this case, the macro is simply a placeholder for a condition or symbol.
+This is commonly used for conditional compilation ($\S$ \ref{sec:conditional-compilation}) to enable or disable certain parts of the code depending on whether the macro is defined:
+
+\begin{cxx}{}
+#define DEBUG
+\end{cxx}
+
+\noindent
+The \inlinecxx{#define} directive can also be used to create function-like macros that accept arguments:
+
+\begin{cxx}{}
+#include <iostream>
+
+#define SQUARE(x) x * x
+#define MAX(a, b) a > b ? a : b
+
+int main()
+{
+    std::cout << SQUARE(5) << std::endl;
+    std::cout << MAX(2, 3) << std::endl;
+}
+\end{cxx}
+
+\noindent
+\noindent In the example above, the preprocessor replaces \inlinecxx{SQUARE(5)} with \inlinecxx{5 * 5} and \inlinecxx{MAX(2, 3)} with \inlinecxx{2 > 3 ? 2 : 3}.
+However, the potential for unexpected behavior increases significantly with function-like macros.
+This is because the preprocessor simply performs text substitution, without understanding operator precedence or modification sequencing.
+Consider the following example:
+
+\begin{cxx}{square.cpp}
+#include <iostream>
+
+#define SQUARE(x) x * x
+int main()
+{
+	std::cout << SQUARE(3 + 3) << std::endl;
+}
+\end{cxx}
+
+\noindent
+One would expect this code to yield $6 \times 6 = 36$, however, when we run it:
+
+\begin{terminal}
+$ clang++ -std=c++23 square.cpp
+$ ./a.out
+15
+\end{terminal}
+
+\noindent
+We get 15 instead.
+This happens because the preprocessor expanded \inlinecxx{SQUARE(3 + 3)} into \inlinecxx{3 + 3 * 3 + 3}, which evaluates to 15 due to the order of operations.
+To prevent this type of error, we can wrap every argument in parentheses \inlinecxx{()}:
+
+\begin{cxx}{}
+#define SQUARE(x) ((x) * (x))
+\end{cxx}
+
+\noindent
+By doing so, we ensure that the expression inside the macro is evaluated before applying the multiplication.
+With this modification, \inlinecxx{SQUARE(3 + 3)} will correctly evaluate to 36.
+However, we're not entirely safe yet.
+Consider the following example:
+
+\begin{cxx}{square2.cpp}
+#include <iostream>
+
+#define SQUARE(x) ((x) * (x))
+
+int main()
+{
+	int i { 5 };
+	std::cout << SQUARE(++i) << std::endl;
+}
+\end{cxx}
+
+\noindent
+Again, one might expect this to return $6\times 6 = 36$ but when we run it:
+
+\begin{terminal}
+$ clang++ -std=c++23 square2.cpp
+$ ./a.out
+42
+\end{terminal}
+
+\noindent
+We get 42 instead.
+This happens because when the preprocessor expands \inlinecxx{SQUARE(++i)}, it turns it into \inlinecxx{((++i)*(++i))}.
+This results in \inlinecxx{i} being incremented twice--first to 6, then to 7--leading to the multiplication of $6 \times 7$ (or $7 \times 6$).
+Since the macro is evaluated twice with the side-effect of modifying the variable, the result is not as expected.
+
+\begin{advice}
+\noindent
+Unfortunately, there is no simple way to combat this problem, other than forgoing function-like macros altogether.
+For this reason, it is highly recommended to leave work up to the compiler whenever possible.
+As a rule of thumb: \textbf{the compiler is smart, but the preprocessor is stupid}.
+The compiler can optimize your code, catch potential bugs, and provide helpful warnings, but the preprocessor simply performs text substitution without any understanding of the code's logic or semantics.
+Hence, given the choice between a function-like macro and a function, you should almost always prefer a function--especially with modern C++ features such as lambdas and compile-time functions, which offer better type safety, readability, and performance.
+\end{advice}
+
+\noindent
+Now that we've mercilessly condemned preprocessor macros, let's talk about how to rid them from our codebase entirely.
+The \inlinecxx{#undef} directive can be used to undefine a previously defined macro:
+
+\begin{cxx}{}
+#define PI 3.14159
+double area1 { PI * 1 * 1 };
+
+#undef PI
+double area2 { PI * 2 * 2 }; // error! PI is undefined
+\end{cxx}
+
+\noindent
+The reason for doing this is quite simple: we want to prevent naming conflicts.
+By undefining macros that are no longer needed, we avoid the risk of accidental redefinitions or clashes with other parts of the code.
+
+\subsubsection{File Inclusion \inlinecxx{\#include}}
+\label{sec:file-inclusion}
+
+\noindent
+The \inlinecxx{#include} directive is used to include the contents of one file in another.
+It can be thought of as the ``copy-and-paste'' directive, where the preprocessor searches for the specified file and pastes its contents into the source code.
+There are two variations of \inlinecxx{#include}: angle brackets \inlinecxx{<>} and double quotes \inlinecxx{""}:
+
+\begin{cxx}{}
+#include <iostream> // brackets
+#include "myfile.h" // quotes
+\end{cxx}
+
+\noindent
+The difference lies in the search path for the file.
+With angle brackets, the preprocessor searches the \textbf{include path}, which is a directory (or list of directories) containing various standard librares and headers.
+With double quotes, it first looks in the current directory and, if not found, checks the include path.
+
+\begin{advice}
+While you could technically use quotes for all includes, it's best practice to reserve angle brackets for standard library headers (like \inlinecxx{iostream}) and use double quotes for project-specific or local files.
+\end{advice}
+
+\noindent
+The \inlinecxx{#include} directive essentially copies and pastes the contents of the included file in place of the directive:
+
+\begin{cxx}{x.cpp}
+int x { 500 };
+\end{cxx}
+
+\begin{cxx}{main.cpp}
+#include <iostream>
+
+#include "x.cpp" // copy and paste x.cpp's contents here
+
+int main()
+{
+	std::cout << x << std::endl;
+}
+\end{cxx}
+
+\noindent
+The two files above are functionally equivalent to:
+
+\begin{cxx}{main.cpp}
+#include <iostream>
+
+int x { 500 };
+
+int main()
+{
+	std::cout << x << std::endl;
+}
+\end{cxx}
+
+\noindent
+To further demonstrate the simple and literal nature of \inlinecxx{#include}, consider this more ridiculous, unholy, and outright blasphemous example:
+
+\begin{cxx}{int.cpp}
+int
+\end{cxx}
+
+\begin{cxx}{mainfunc.cpp}
+main()
+\end{cxx}
+
+\begin{cxx}{openbrace.cpp}
+{
+\end{cxx}
+
+\begin{cxx}{message.cpp}
+std::cout << "Hello, World!" << std::endl;
+\end{cxx}
+
+\begin{cxx}{closebrace.cpp}
+}
+\end{cxx}
+
+\begin{cxx}{helloworld.cpp}
+#include <iostream>
+
+#include "int.cpp"
+#include "mainfunc.cpp"
+#include "openbrace.cpp"
+#include "message.cpp"
+#include "closebrace.cpp"
+\end{cxx}
+
+\begin{terminal}
+$ clang++ -std=c++23 helloworld.cpp && ./a.out
+Hello, World!
+\end{terminal}
+
+\begin{explanation}
+After including the other five files into \texttt{helloworld.cpp}, we are left with:
+
+\begin{cxx}{}
+#include <iostream>
+
+int
+main()
+{
+std::cout << "Hello, World!" << std::endl;
+}
+\end{cxx}
+
+\noindent
+When compiled and run, this produces the expected output. This example highlights how \inlinecxx{#include} simply pastes the contents of the files, completely disregarding logic or structure.
+\end{explanation}
+
+\noindent
+It should go without saying that your projects should never resemble the example above.
+Any developer writing production code in this manner can, should, and will be fired--if not prematurely conscripted.
+A proper approach to modular file structure is covered in $\S$ \ref{sec:header-files} \nameref{sec:header-files}.
+
+\subsubsection{Header \texttt{.h} Files}
+\label{sec:header-files}
+
+\noindent
+Header files are commonly used in C++ to organize code, especially in larger projects.
+Their primary role is to \textbf{declare the interface} of a module or library, allowing for separation between the declaration of functionality and its implementation.
+However, there are no strict rules in C++ about what should or shouldn't go into a header file—it's mostly up to the developer or the project's conventions.
+Here's an example of a simple header file, \texttt{mylib.h}:
+
+\begin{cxx}{mylib.h}
+void greet(); // declare the function greet()
+\end{cxx}
+
+\noindent
+In this example, \texttt{mylib.h} declares the \inlinecxx{greet()} function. 
+The \textbf{definition} (or \textbf{implementation}) of this function would typically be placed in the corresponding source file, \texttt{mylib.cpp}:
+
+\begin{cxx}{mylib.cpp}
+// include mylib.h to inherit the declaration of greet()
+#include "mylib.h"
+
+void greet()
+{
+	std::cout << "Hello from MyLib!" << std::endl;
+}
+\end{cxx}
+
+\noindent
+By separating declarations (in header files, \texttt{.h}) and definitions (in source files, \texttt{.cpp}), we improve code readability, reusability, and modularity.
+This structure allows different parts of the program to focus on their specific responsibilities, making the codebase easier to maintain and understand.
+
+\vspace{1em}
+\noindent
+A useful convention is to name header files after the module or class they describe.
+Additionally, some C++ developers prefer using the \texttt{.hpp} extension instead of \texttt{.h} to indicate that the header contains C++-specific code rather than C code.
+However, this is purely a matter of convention and personal or project-specific preference.
+
+\subsubsection{Conditional Compilation}
+\label{sec:conditional-compilation}
+
+\noindent
+The preprocessor provides several mechanisms for conditionally including or excluding code.
+One of the most common directives is \inlinecxx{#if}, which evaluates a condition and includes the subsequent block only if the condition is true:
+
+\begin{cxx}{}
+#define DEBUG 1
+
+#if DEBUG
+	// debugging logic...
+#endif
+\end{cxx}
+
+\noindent
+You can also use \inlinecxx{#else} and \inlinecxx{#elif} (else-if) to create branching logic within your preprocessor directives:
+
+\begin{cxx}{}
+#define CONTROL 2
+#if (CONTROL == 1)
+	// ...
+#elif (CONTROL == 2)
+	// ...
+#elif (CONTROL == 3)
+	// ...
+#else
+	// ...
+#endif
+\end{cxx}
+
+\noindent
+Note that any preprocessor conditional block must be terminated with the \inlinecxx{#endif} directive.
+The \inlinecxx{#ifdef} and \inlinecxx{#ifndef} directives provide further control by allowing you to include a block if a macro is defined (\inlinecxx{#ifdef}) or not defined (\inlinecxx{#ifndef}):
+
+\begin{cxx}{}
+#define DEBUG
+
+#ifdef DEBUG
+	// debugging logic...
+#endif
+\end{cxx}
+
+\noindent
+A very common use case for conditional compilation is \textbf{include guards}.
+An include guard prevents the same file from being included multiple times within a translation unit, which could cause redefinition errors.
+For example, an include guard for \texttt{mylib.h} might look like this:
+
+\begin{cxx}{mylib.h}
+#ifndef MYLIB_H_INCLUDED
+#define MYLIB_H_INCLUDED
+
+void greet();
+
+#endif // MYLIB_H_INCLUDED
+\end{cxx}
+
+\noindent
+When \inlinecxx{#include "mylib.h"} is encountered for the first time, the preprocessor macro \inlinecxx{MYLIB\_H\_INCLUDED} has not been defined, so the code within \texttt{mylib.h} is included.
+If the file is included again, the symbol \texttt{MYLIB\_H\_INCLUDED} has already been defined, so the contents of the file are skipped, thus avoiding redefinition errors.
+
+\subsubsection{Translation Units}
+\label{sec:translation-units}
+
+\noindent
+The output of the preprocessing stage is known as a \textbf{translation unit}.
+A translation unit is the preprocessed result of a single source file, with all preprocessor directives recursively expanded.
+This means that a translation unit includes any files that have been included via \inlinecxx{#include}.
+As a result, the preprocessor's output is still valid C++ code.
+We can inspect the preprocessor's output by using the \texttt{-E} flag with \texttt{Clang}:
+
+\begin{cxx}{define.cpp}
+#include <iostream>
+
+#define X 350
+
+int main() {
+	std::cout << X << std::endl;
+}
+\end{cxx}
+
+\begin{terminal}
+$ clang++ -std=c++23 -E define.cpp > translation_unit.cpp
+$ clang++ -std=c++23 translation_unit.cpp && ./a.out
+350
+\end{terminal}
+
+\noindent
+In this example, the \texttt{-E} flag tells \texttt{Clang} to stop after the preprocessing step, at which point we redirect the output into \texttt{translation\_unit.cpp}.
+We then compile \texttt{translation\_unit.cpp} and run it like any other C++ file.
+The result is the same as if we had compiled \texttt{define.cpp}.
+
+\begin{table}[h!]
+	\label{tab:preprocessor-directives}
+    \centering
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabular}{>{\raggedright\arraybackslash}p{0.18\textwidth} >{\raggedright\arraybackslash}p{0.6\textwidth} >{\raggedright\arraybackslash}p{0.12\textwidth}}
+        \toprule[1.5pt]
+        \textbf{Directive} & \textbf{Description} & \textbf{Section} \\
+        \midrule
+        {\inlinecxx{#define}}   & Defines a macro, which can be an object-like macro or a function-like macro. 																			& $\S$ \ref{sec:text-replacement} \\
+        {\inlinecxx{#undef}}    & Undefines a previously defined macro.																													& $\S$ \ref{sec:text-replacement} \\
+        {\inlinecxx{#include}}  & Includes the contents of a specified file. 																											& $\S$ \ref{sec:file-inclusion} \\
+        {\inlinecxx{#if}}       & Begins a conditional block; code within is compiled only if the condition is true. 																	& $\S$ \ref{sec:conditional-compilation} \\
+        {\inlinecxx{#elif}}     & Specifies an alternate condition within a {\inlinecxx{#if}} block. 																					& $\S$ \ref{sec:conditional-compilation} \\
+        {\inlinecxx{#else}}     & Specifies the code to be compiled if none of the preceeding {\inlinecxx{#if}} or {\inlinecxx{\#elif}} checks are true. 								& $\S$ \ref{sec:conditional-compilation} \\
+        {\inlinecxx{#ifdef}}    & Checks if a macro is defined; code within is compiled only if the macro is defined. 																	& $\S$ \ref{sec:conditional-compilation} \\
+        {\inlinecxx{#ifndef}}   & Checks if a macro is not defined; code within is compiled only if the macro is not defined. 															& $\S$ \ref{sec:conditional-compilation} \\
+        {\inlinecxx{#endif}}    & Ends a conditional compilation block. 																												& $\S$ \ref{sec:conditional-compilation} \\
+        {\inlinecxx{#error}}    & Generates a compilation error with a message. 																								& \\
+        {\inlinecxx{#warning}}  & Generates a warning with a message. 																							& \\
+        {\inlinecxx{#line}}     & Changes the compiler's idea of the current line. 																						& \\
+        {\inlinecxx{#pragma}}   & Provides additional, implementation-defined instructions to the compiler. 	& \\
+        \bottomrule[1.5pt]
+    \end{tabular}
+	\caption{Overview of Preprocessor Directives and Their Functions}
+\end{table}
+
+\subsection{The Compiler}
+
+\noindent
+Compilation is the second stage of the build process.
+During this phase, the compiler takes the preprocessed output (translation unit) and converts it into an \textbf{object file}.
+This section offers a brief overview of the compilation process, provides tools for inspecting the compiler's output, and includes a directory of common compiler flags on page \pageref{tab:compiler-flags-begin}.
+
+\subsubsection{The Compilation Process}
+
+\noindent
+What follows is a brief overview of the compilation process.
+This is by no means an exhaustive resource for learning about compilers.
+Compiler design is both an art and a science in and of itself, and this section is intended only to provide a high-level understanding to support our exploration of C++.
+Nonetheless, the six major steps in the compilation process are as follows:
+
+\begin{enumerate}
+
+\item{\textbf{Lexical Analysis: Tokenization}}
+
+\noindent
+The first step in the compilation process is breaking the source code into \textbf{tokens}--the smallest meaningful units.
+Tokens can include keywords (\inlinecxx{int}, \inlinecxx{for}, \inlinecxx{return}), identifiers (\inlinecxx{x}, \inlinecxx{foo}, \inlinecxx{main}), operators (\inlinecxx{+}, \inlinecxx{=}, \inlinecxx{&&}), literals (\inlinecxx{5}, \inlinecxx{"Hello"}), or symbols (\inlinecxx{\{} , \inlinecxx{;}, \inlinecxx{]}).
+For example, the code:
+
+\begin{cxx}{}
+int y = x + 5;
+\end{cxx}
+
+\noindent
+might be tokenized as:
+
+\begin{cxx}{}
+[int] [y] [=] [x] [+] [5] [;]
+\end{cxx}
+
+\noindent
+At this stage, the compiler detects tokenization errors, such as the inclusion of an extraneous symbol:
+
+\begin{cxx}{}
+// error, extraneous symbol: '@'
+int @ main()
+{
+}
+\end{cxx}
+
+\item{\textbf{Syntax Analysis: Parsing}}
+
+\noindent
+After tokenization, the next step in the compilation process is \textbf{parsing}, where the compiler checks if the source code follows the proper grammar or syntax rules of the language.
+For example, this code is valid:
+
+\begin{cxx}{}
+int x { 42 };
+\end{cxx}
+
+\noindent
+But this code is invalid:
+
+\begin{cxx}{}
+42 {} x  ;int
+\end{cxx}
+
+\noindent
+Although both snippets have the same tokens, the second example violates the syntactic structure of C++.
+The parser catches errors like these by analyzing the arrangement of tokens.
+Its output is a \textbf{parse tree}, which reflects the syntactic structure of the program.
+This step ensures the code follows the rules for valid expressions and statements.
+
+\item{\textbf{Semantic Analysis}}
+
+\noindent
+Next, the compiler checks the code for logical correctness by analyzing the parse tree.
+This step ensures that the code makes sense in terms of variable types, function usage, and scope.
+For example, this code passes the parsing phase but fails at semantic analysis:
+
+\begin{cxx}{}
+int x { "forty-two" };
+\end{cxx}
+
+\noindent
+The code is syntactically valid, but semantically incorrect because an integer variable is being assigned a string value.
+
+\item{\textbf{Intermediate Code Generation}}
+
+\noindent
+At this stage, the compiler has confirmed the correctness of the code.
+It now translates the code into an intermediate representation (IR), which is independent of the target machine.
+This step makes the code easier to optimize and facilitates porting the program to different hardware architectures.
+
+\item{\textbf{Code Optimization}}
+
+\noindent
+The compiler then attempts to make the final executable smaller, faster, or otherwise more efficient without altering its intended functionality.
+Modern compilers are highly sophisticated in the optimizations they can perform.
+Some common optimization strategies include:
+
+\begin{itemize}
+
+\item{\textbf{Constant Folding}: Replacing constant expressions at compile-time:}
+
+\begin{cxx}{}
+int weeks { 365 / 7 };
+\end{cxx}
+
+\noindent
+This code can be optimized into:
+
+\begin{cxx}{}
+int weeks { 52 };
+\end{cxx}
+
+\noindent
+Constant folding eliminates the need for a run-time calculation.
+
+\item{\textbf{Loop Hoisting}: Removing repeated computations from a loop body:}
+
+\begin{cxx}{}
+for (int i = 0; i < 1000; ++i)
+{
+	int k { calculation() };
+	// ...
+}
+\end{cxx}
+
+\noindent
+This code can be optimized into:
+
+\begin{cxx}{}
+int k { calculation() };
+for (int i = 0; i < 1000; ++i)
+{
+	// ...
+}
+\end{cxx}
+
+\noindent
+Since the value of \inlinecxx{k} does not change with each loop iteration, the compiler moves the calculation outside the loop to avoid redundant computation, while ensuring that \inlinecxx{k} maintains its intended scope.
+
+\item{\textbf{Dead Code Elimination}: Removing code that cannot execute:}
+
+\begin{cxx}{}
+void foo()
+{
+	// ...
+	return;
+	// this code is 'dead' ...
+}
+\end{cxx}
+
+\noindent
+In this example, the compiler can eliminate the unreachable code after the \inlinecxx{return} statement, as it will never be executed.
+
+\item{\textbf{Common Expression Removal}: Eliding redundant computations:}
+
+\begin{cxx}{}
+int a { x * y }, b { x * y * z };
+\end{cxx}
+
+\noindent
+The above code can be optimized into:
+
+\begin{cxx}{}
+int a { x * y }, b { a * z };
+\end{cxx}
+
+\noindent
+By calculating \inlinecxx{a} once and reusing it in the second expression, the compiler avoids recomputing \inlinecxx{x * y} twice.
+
+\end{itemize}
+
+\begin{advice}
+\noindent
+In general, you should avoid sacrificing code readability for micro-performance improvements.
+The compiler is much better at performing optimizations than you are.
+For example, I've seen code like this:
+\end{advice}
+
+\begin{cxx}{}
+int log10(int n) { // find floor(log10(n))
+	int log { -1 };
+	for (int i = 1; i <= n; ++log) {
+		i = (i << 3) + (i << 1); // i *= 10
+	}
+	return log;
+}
+\end{cxx}
+
+\begin{advice}
+\noindent
+In this case, the programmer tried to optimize the expression \inlinecxx{i * 10} by replacing it with \inlinecxx{(i << 3)+(i << 1)}.
+The first issue here is that there's no guarantee the bitshift and addition will actually be faster than multiplication--it might even be slower depending on the processor.
+The second issue is that any competent compiler will likely perform this optimization automatically, and without hurting everyone's eyes in the process.
+
+\vspace{1em}
+\noindent
+I'm not suggesting that you shouldn't optimize your code, but rather that you should avoid micro-optimizations that hurt readability.
+The compiler will likely handle those for you.
+On the other hand, algorithmic optimizations are always worth your attention because compilers generally can't identify those on their own.
+\end{advice}
+
+\item{\textbf{Code Generation}}
+
+\noindent
+In this final phase of compilation, the compiler translates the optimized intermediate representation (IR) into machine code that is specific to the target processor.
+This machine code is what the CPU can directly execute.
+
+\end{enumerate}
+
+\subsubsection{Compiler Output}
+
+\noindent
+The compiler produces an \textbf{object file} as its output, typically with a \texttt{.o} or \texttt{.obj} extension on Unix-like systems.
+This object file contains machine code that the processor can understand, but it is not yet a complete executable program.
+To produce an object file, we can use the \texttt{-c} flag with \texttt{Clang}, instructing the compiler to compile the source file without linking:
+
+\begin{cxx}{main.cpp}
+int x { 401 };
+
+int multiply(int a, int b) { return a * b; }
+
+int main() {
+	multiply(x, 10);
+}
+\end{cxx}
+
+\begin{terminal}
+$ clang++ -std=c++23 -c main.cpp
+\end{terminal}
+
+\noindent
+This command produces \texttt{main.o}, the object file corresponding to \texttt{main.cpp}.
+Since object files are not human-readable, we need special tools to inspect their contents.
+For example, the \inlinesh{objdump} command (or similar tools) allows us to analyze an object file:
+
+\begin{terminal}
+$ objdump -tC main.o
+code/main.o:    file format mach-o arm64
+
+SYMBOL TABLE:
+0000000000000000 l     F __TEXT,__text ltmp0
+0000000000000044 l     O __DATA,__data ltmp1
+0000000000000048 l     O __LD,__compact_unwind ltmp2
+0000000000000000 g     F __TEXT,__text multiply(int, int)
+0000000000000020 g     F __TEXT,__text _main
+0000000000000044 g     O __DATA,__data _x
+\end{terminal}
+
+\noindent
+Here, the \texttt{-t} flag tells \inlinesh{objdump} to display the \textbf{symbol table}, which contains information about symbols (functions, variables, etc.) in the object file.
+The \texttt{-C} flag ensures that C++ symbols are demangled, revealing their original names instead of the compiler-mangled versions.
+From the output, we can recognize elements from our original C++ code:
+
+\begin{itemize}
+	\item The function \inlinecxx{multiply(int, int)}.
+	\item The function \inlinecxx{main()}.
+	\item The variable \inlinecxx{x}.
+\end{itemize}
+
+\noindent
+Understanding the symbol table gives insight into how the compiler translates C++ code into machine instructions before linking it into an executable.
+Instead of an object file, we can also generate \textbf{assembly code} using the \texttt{-S} flag with \texttt{Clang}:
+
+\begin{terminal}
+$ clang++ -std=c++23 -S main.cpp
+\end{terminal}
+
+\noindent
+This command produces \texttt{main.s}, an assembly file corresponding to \texttt{main.cpp}.
+This file provides a closer look at the low-level instructions generated by the compiler, helping us understand how C++ constructs translate into assembly.
+
+\subsubsection{Compiler Flags}
+
+This section provides a directory of commonly used C++ compiler flags for \texttt{Clang} and \texttt{g++}, along with their descriptions.
+To view the full list of available flags for your compiler, you can use \inlinesh{clang++ -help} or \inlinesh{g++ --help}.
+These commands will display a comprehensive list of supported compiler options, including optimizations, warnings, debugging features, and more.
+
+\begin{center}
+\label{tab:compiler-flags-begin}
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.15\textwidth} >{\raggedright\arraybackslash}p{0.15\textwidth} >{\raggedright\arraybackslash}p{0.60\textwidth}}
+	\toprule[1.5pt]
+	\textbf{\texttt{Clang}} & \texttt{g++} & \textbf{Description} \\
+	\midrule
+	\endfirsthead
+
+	\toprule[1.5pt]
+	\textbf{\texttt{Clang}} & \texttt{g++} & \textbf{Description} \\
+	\midrule
+	\endhead
+
+	\midrule
+	\endfoot
+
+	\endlastfoot
+
+	\texttt{-o} & \texttt{-o} & Specify the output file.\\
+	\texttt{-E} & \texttt{-E} & Stop after preprocessing, do not compile. Output is a translation unit. \\
+	\texttt{-S} & \texttt{-S} & Stop after compilation, do not assemble. Output is an assembly file. \\
+	\texttt{-c} & \texttt{-c} & Stop after assembling, do not link. Output is an object file. \\
+
+	\midrule
+	\multicolumn{3}{l}{\textbf{Warning Flags}}\\
+	\texttt{-Wall} & \texttt{-Wall} & Enables most common warnings that help catch potential issues. \\
+	\texttt{-Werror} & \texttt{-Werror} & Treats warnings as errors. \\
+	\texttt{-Wextra} & \texttt{-Wextra} & Enables additional warnings not covered by \texttt{-Wall}. \\
+	\texttt{-pedantic} & \texttt{-pedantic} & Enforces strict C++ compliance, warning about language extensions. \\
+	\texttt{-w} & \texttt{-w} & Suppress all warnings. \\
+
+	\multicolumn{3}{l}{\textbf{Optimization Flags}}\\
+	\texttt{-O0} & \texttt{-O0} & No optimization, default setting for debugging. \\
+	\texttt{-O1} & \texttt{-O1} & Enables basic optimizations that don't significantly increase compile time. \\
+	\texttt{-O2} & \texttt{-O2} & More aggresive optimization. \\
+	\texttt{-O3} & \texttt{-O3} & Maximum optimizations, potentially increasing code size and compile time. \\
+	\texttt{-Os} & \texttt{-Os} & Optimizes for a reduced binary size. \\
+	\texttt{-ffast-math} & \texttt{-ffast-math} & Allow aggressive, potentially lossy floating-point optimizations. \\
+
+	\midrule
+	\multicolumn{3}{l}{\textbf{Additional Flags}}\\
+	\texttt{-std=c++\itshape{X}} & \texttt{-std=c++\itshape{X}} & Use the specified C++ standard (e.g., \texttt{-std=c++23}). \\
+	\texttt{-v} & \texttt{-v} & Display verbose compilation details, including toolchain paths and options. \\
+	\texttt{-x \itshape{lang}} & \texttt{-x \itshape{lang}} & Explicitly specify the language for the following input files. \\
+	\texttt{-g} & \texttt{-g} & Include source-level debugging information in the binary. \\
+	\texttt{-I \itshape{dir}} & \texttt{-I \itshape{dir}} & Add a directory to the include path for header file lookup. \\
+	\texttt{-L \itshape{dir}} & \texttt{-L \itshape{dir}} & Add a directory to the search list for library linking. \\
+	\texttt{-l \itshape{lib}} & \texttt{-l \itshape{lib}} & Link with the specified library (e.g., \texttt{-lm} for the math library). \\
+	\texttt{-D \itshape{macro}} & \texttt{-D \itshape{macro}} & Define a macro, equivalent to \inlinecxx{#define macro}. \\
+	\texttt{-U \itshape{macro}} & \texttt{-U \itshape{macro}} & Undefine a macro. \\
+	\bottomrule[1.5pt]
+
+	\caption{Common Compiler Flags for \texttt{Clang} and \texttt{g++}}
+	\label{tab:compiler-flags}
+\end{longtable}
+\end{center}
+
+\subsection{The Linker}
+
+\noindent
+Linking is the final stage of the build process.
+The linker is responsible for combining multiple object files into a single executable program.
+It resolves \textbf{external references}, which are references that reach across translation units (i.e., files).
+To illustrate how the linker works, let’s examine a project comprising three files:
+
+\begin{cxx}{foo.h}
+#ifndef FOO_H_INCLUDED
+#define FOO_H_INCLUDED
+
+void foo();
+
+#endif // FOO_H_INCLUDED
+\end{cxx}
+
+\begin{cxx}{foo.cpp}
+#include <iostream>
+#include "foo.h"
+
+void foo()
+{
+	std::cout << "fooing..." << std::endl;
+}
+\end{cxx}
+
+\begin{cxx}{proj.cpp}
+#include "foo.h"
+
+int main()
+{
+	foo();
+	return 0;
+}
+\end{cxx}
+
+\noindent
+In the example above, \texttt{foo.h} contains the declaration of \inlinecxx{foo()}.
+This header file is meant to be included in source files to make the \inlinecxx{foo()} function available for use.
+\texttt{foo.cpp} contains the implementation of \inlinecxx{foo()}.
+Finally, \texttt{proj.cpp} contains the \inlinecxx{main()} function, which makes a call to \inlinecxx{foo()}.
+With this in mind, one might attempt to build this project with the following command:
+
+\begin{terminal}
+$ clang++ -std=c++23 proj.cpp
+\end{terminal}
+
+\noindent
+However, running this command will produce a linker error:
+
+\begin{terminal}
+$ clang++ -std=c++23 proj.cpp
+Undefined symbols for architecture x86_64:
+  "foo()", referenced from:
+      _main in proj-94090f.o
+ld: symbol(s) not found for architecture x86_64
+\end{terminal}
+
+\noindent
+This error can be immediately identified as a linker error due to the ``\texttt{ld:}'' in the output.
+The error message states that the symbol \inlinecxx{foo()} is undefined.
+This occurs because \texttt{foo()} is defined in \texttt{foo.cpp}, but the linker is unable to find it when compiling only \texttt{proj.cpp}.
+The compiler cannot resolve references to \inlinecxx{foo()} because the definition is in a different translation unit (i.e., \texttt{foo.cpp}).
+
+\vspace{1em}
+\noindent
+To resolve this issue, we need to explicitly tell the linker where to find the definition of \inlinecxx{foo()}.
+For illustrative purposes, we will first build the project manually, step by step, and then show how to compile and link it in a single command.
+First, note that since this is a linker error, we can still compile \texttt{proj.cpp} just fine with the \texttt{-c} flag:
+
+\begin{terminal}
+$ clang++ -std=c++23 -c proj.cpp
+\end{terminal}
+
+\noindent
+This command produces the object file \texttt{proj.o}. Similarly, this command:
+
+\begin{terminal}
+$ clang++ -std=c++23 -c foo.cpp
+\end{terminal}
+
+\noindent
+produces \texttt{foo.o}.
+We can then pass these object files to \texttt{Clang} to create the final executable.
+Here’s how the complete process looks:
+
+\begin{terminal}
+$ clang++ -std=c++23 -c proj.cpp
+$ clang++ -std=c++23 -c foo.cpp
+$ clang++ proj.o foo.o
+$ ./a.out
+fooing...
+\end{terminal}
+
+\noindent
+When the compiler compiles \texttt{proj.cpp}, it encounters an external reference to \inlinecxx{foo()}.
+At this point, the compiler trusts that the definition of \inlinecxx{foo()} will be available to the linker.
+We can confirm this by inspecting the symbol table of \texttt{proj.o} using \inlinesh{objdump}:
+
+\begin{terminal}
+$ objdump -tC proj.o
+SYMBOL TABLE:
+0000000000000000 l     F __TEXT,__text ltmp0
+0000000000000018 l     O __LD,__compact_unwind ltmp1
+0000000000000000 g     F __TEXT,__text _main
+0000000000000000         *UND* foo()
+\end{terminal}
+
+\noindent
+Notice the \texttt{UND} (undefined) next to \inlinecxx{foo()}.
+This indicates that \texttt{foo()} is an undefined symbol in \texttt{proj.o}, meaning the linker will need to resolve this symbol when the object files are linked together.
+To build the project in one fell swoop, we can simply pass all the translation unit source files to \texttt{Clang} at once:
+
+\begin{terminal}
+$ clang++ -std=c++23 proj.cpp foo.cpp
+$ ./a.out
+fooing...
+\end{terminal}
+
+\end{document}

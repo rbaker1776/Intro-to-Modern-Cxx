@@ -1,0 +1,33 @@
+\documentclass[12pt]{article}
+
+\usepackage{../../tex/preamble}
+
+\begin{document}
+
+\section{Variable Templates}
+
+\noindent
+One notable feature introduced in C++14 is the \textbf{variable template}. Variable templates allow us to define parameterized constants, making it easy to work with constants of different types. Here's a simple example of how we can define $\pi$ using a variable template:
+
+\begin{lstlisting}[style=cxx]
+template<class T>
+const T pi = T(3.14159265358979323);
+\end{lstlisting}
+
+\noindent
+In this code, \inlinecxx{pi} is a variable template that can be instantiated with various types. The variable template allows $\pi$ to be used with different data types, such as \inlinecxx{double} or \inlinecxx{int}, without needing to write separate definitions for each type.
+
+\begin{lstlisting}[style=cxx]
+#include <iostream>
+
+template<class T> const T pi = T(3.14159265358979323);
+
+int main()
+{
+    using namespace std;
+    cout << "math:" << pi<double> << endl; // 3.14159
+    cout << "engineering:" << pi<int> << endl; // 3
+}
+\end{lstlisting}
+
+\end{document}
