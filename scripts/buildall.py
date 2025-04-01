@@ -17,7 +17,7 @@ def clean_build_dir(builddir: str) -> None:
         path = Path(builddir)
         assert(path.exists() and path.is_dir())
         for file in path.iterdir():
-            if file.is_file() and file.suffix.lower() != ".pdf":
+            if file.is_file() and file.suffix.lower() not in [".pdf", ".toc"]:
                 file.unlink()
     except Exception as e:
         print(e) 
