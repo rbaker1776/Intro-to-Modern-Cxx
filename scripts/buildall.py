@@ -36,7 +36,7 @@ def build_all():
             print(f"  {i:>3}  {chapter:<26}  ", end='')
             result = subprocess.run(build_command(chapter), shell=True, cwd=chapter_path, capture_output=True, text=True)
             if (result.returncode == 0):
-                clean_build_dir(os.path.join(chapter_path, "build"))
+                #clean_build_dir(os.path.join(chapter_path, "build"))
                 print("✅ TeX compiled successfully")
             else:
                 print("❌ TeX compilation failed")

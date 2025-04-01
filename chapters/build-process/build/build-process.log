@@ -1,7 +1,7 @@
 This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2024.12.24)  1 APR 2025 10:19
  restricted system commands enabled.
-**ctemplates.tex
-(./ctemplates.tex
+**build-process.tex
+(./build-process.tex
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
 Lua module: luaotfload 2024-02-14 3.28 Lua based OpenType font support
@@ -58,7 +58,7 @@ ve/2024/texmf-var/luatex-cache/generic/names/luaotfload-names.luc.gz)
 \belowcaptionskip=\skip49
 \bibindent=\dimen139
 )
-(../../tex/preamble.sty
+(/Users/ryanbaker/cxxsaturdays/tex/preamble.sty
 (/usr/local/texlive/2024/texmf-dist/tex/latex/xcolor/xcolor.sty
 Package: xcolor 2023/11/15 v3.01 LaTeX color extensions (UK)
 
@@ -1553,8 +1553,8 @@ LaTeX Font Info:    Trying to load font information for T1+ybv on input line 32
 (/usr/local/texlive/2024/texmf-dist/tex/latex/baskervald/t1ybv.fd
 File: t1ybv.fd 2010/07/13 Fontinst v1.933 font definitions for T1/ybv.
 ))
-(./build/ctemplates.aux)
-\openout1 = ctemplates.aux
+(./build/build-process.aux)
+\openout1 = build-process.aux
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 5.
 LaTeX Font Info:    ... okay on input line 5.
@@ -1609,6 +1609,7 @@ LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
 (Font)                  OT1/cmss/bx/n --> TU/KpSans(0)/b/n on input line 5.
 LaTeX Info: Redefining \idotsint on input line 5.
 
+(./build/build-process.toc
 (/usr/local/texlive/2024/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2024/02/21 1.10 listings language file
 )
@@ -1619,223 +1620,191 @@ File: lstlang1.sty 2024/02/21 1.10 listings language file
 File: lstmisc.sty 2024/02/21 1.10 (Carsten Heinz)
 )
 LaTeX Font Info:    Font shape `TU/JetBrainsMono(0)/m/n' will be
-(Font)              scaled to size 10.125pt on input line 18.
+(Font)              scaled to size 10.125pt on input line 3.
+)
+\tf@toc=\write4
 
-
-! Package Listings Error: Couldn't load requested style.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.20 \begin{lstlisting}[style=cxx]
-                                
-The following styles weren't loadable:
-    ,cxx$
-This may cause errors in the sequel.
-
-
-! Package Listings Error: style cxx undefined.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.20 \begin{lstlisting}[style=cxx]
-                                
-The style is not loadable. Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-! Package Listings Error: Couldn't load requested style.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.31 \begin{lstlisting}[style=cxx]
-                                
-The following styles weren't loadable:
-    ,cxx$
-This may cause errors in the sequel.
-
-
-! Package Listings Error: style cxx undefined.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.31 \begin{lstlisting}[style=cxx]
-                                
-The style is not loadable. Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-! Package Listings Error: Couldn't load requested style.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.46 \begin{lstlisting}[style=cxx]
-                                
-The following styles weren't loadable:
-    ,cxx$
-This may cause errors in the sequel.
-
-
-! Package Listings Error: style cxx undefined.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.46 \begin{lstlisting}[style=cxx]
-                                
-The style is not loadable. Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-! Package Listings Error: Couldn't load requested style.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.53 \begin{lstlisting}[style=cxx]
-                                
-The following styles weren't loadable:
-    ,cxx$
-This may cause errors in the sequel.
-
-
-! Package Listings Error: style cxx undefined.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.53 \begin{lstlisting}[style=cxx]
-                                
-The style is not loadable. Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[1
+\openout4 = build-process.toc
+ [1
 
 {/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-[2]
-
-! Package Listings Error: Couldn't load requested style.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.96 \begin{lstlisting}[style=cxx]
-                                
-The following styles weren't loadable:
-    ,cxx$
-This may cause errors in the sequel.
+LaTeX Font Info:    Trying to load font information for TU+ybv on input line 18
+.
+LaTeX Font Info:    No file TUybv.fd. on input line 18.
 
 
-! Package Listings Error: style cxx undefined.
+LaTeX Font Warning: Font shape `TU/ybv/m/n' undefined
+(Font)              using `TU/lmr/m/n' instead on input line 18.
 
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.96 \begin{lstlisting}[style=cxx]
-                                
-The style is not loadable. Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-\g__tcobox_out_iow=\write4
-
-\openout4 = ctemplates.listing
 LaTeX Font Info:    Font shape `TU/JetBrainsMono(0)/b/n' will be
-(Font)              scaled to size 10.125pt on input line 115.
-(./build/ctemplates.listing)
+(Font)              scaled to size 10.125pt on input line 31.
+\g__tcobox_out_iow=\write5
 
-! Package Listings Error: Couldn't load requested style.
+\openout5 = build-process.listing
+(./build/build-process.listing
+LaTeX Font Info:    Font shape `TU/JetBrainsMono(0)/m/n' will be
+(Font)              scaled to size 8.4375pt on input line 1.
+LaTeX Font Info:    Font shape `TU/JetBrainsMono(0)/m/it' will be
+(Font)              scaled to size 10.125pt on input line 7.
+) [2]
+\openout5 = build-process.listing
+ (./build/build-process.listing)
+\openout5 = build-process.listing
 
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.123 \begin{lstlisting}[style=cxx]
-                                 
-The following styles weren't loadable:
-    ,cxx$
-This may cause errors in the sequel.
+(./build/build-process.listing)
+\openout5 = build-process.listing
+ (./build/build-process.listing) [3]
+\openout5 = build-process.listing
+
+(./build/build-process.listing)
+\openout5 = build-process.listing
+ (./build/build-process.listing)
+\openout5 = build-process.listing
+
+(./build/build-process.listing)
+\openout5 = build-process.listing
+ (./build/build-process.listing) [4]
+\openout5 = build-process.listing
+
+(./build/build-process.listing) [5]
+\openout5 = build-process.listing
+ (./build/build-process.listing)
+\openout5 = build-process.listing
+
+(./build/build-process.listing)
+\openout5 = build-process.listing
+ (./build/build-process.listing)
+\openout5 = build-process.listing
+
+(./build/build-process.listing) [6]
+\openout5 = build-process.listing
+ (./build/build-process.listing)
+\openout5 = build-process.listing
+
+(./build/build-process.listing)
+\openout5 = build-process.listing
+ (./build/build-process.listing)
+\openout5 = build-process.listing
+
+(./build/build-process.listing)
+\openout5 = build-process.listing
+ (./build/build-process.listing)
+\openout5 = build-process.listing
+
+(./build/build-process.listing) [7]
+\openout5 = build-process.listing
+ (./build/build-process.listing)
+\openout5 = build-process.listing
+
+(./build/build-process.listing) [8]
+\openout5 = build-process.listing
+ (./build/build-process.listing)
+\openout5 = build-process.listing
+
+(./build/build-process.listing) [9
+Missing character: There is no — (U+2014) in font ybvr8t!
+]
+\openout5 = build-process.listing
+ (./build/build-process.listing)
+\openout5 = build-process.listing
+ (./build/build-process.listing)
+\openout5 = build-process.listing
+
+(./build/build-process.listing) [10]
+\openout5 = build-process.listing
+ (./build/build-process.listing)
+\openout5 = build-process.listing
+
+(./build/build-process.listing)
+\openout5 = build-process.listing
+ (./build/build-process.listing) [11] [12]
+\openout5 = build-process.listing
+
+(./build/build-process.listing)
+\openout5 = build-process.listing
+ (./build/build-process.listing)
+\openout5 = build-process.listing
+
+(./build/build-process.listing) [13]
+\openout5 = build-process.listing
+ (./build/build-process.listing)
+\openout5 = build-process.listing
+
+(./build/build-process.listing)
+\openout5 = build-process.listing
+ (./build/build-process.listing) [14]
+LaTeX Font Info:    Trying to load font information for TS1+ybv on input line 5
+41.
+
+(/usr/local/texlive/2024/texmf-dist/tex/latex/baskervald/ts1ybv.fd
+File: ts1ybv.fd 2010/07/13 Fontinst v1.933 font definitions for TS1/ybv.
+)
+\openout5 = build-process.listing
+
+(./build/build-process.listing)
+\openout5 = build-process.listing
+ (./build/build-process.listing)
+Overfull \hbox (2.42366pt too wide) in paragraph at lines 557--558
+[]\T1/ybv/b/n/12 Loop Hoist-ing\T1/ybv/m/n/12 : Re-mov-ing re-peated com-pu-ta-t
+ions from a loop body: 
+ []
 
 
-! Package Listings Error: style cxx undefined.
+\openout5 = build-process.listing
+(./build/build-process.listing)
+\openout5 = build-process.listing
+ (./build/build-process.listing)
+\openout5 = build-process.listing
 
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.123 \begin{lstlisting}[style=cxx]
-                                 
-The style is not loadable. Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+(./build/build-process.listing) [15]
+\openout5 = build-process.listing
+ (./build/build-process.listing)
+\openout5 = build-process.listing
 
+(./build/build-process.listing)
+\openout5 = build-process.listing
+ (./build/build-process.listing) [16]
+Package mdframed Info: Not enough space on this page on input line 641.
 
-! Package Listings Error: Couldn't load requested style.
+\openout5 = build-process.listing
 
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.136 \begin{lstlisting}[style=cxx]
-                                 
-The following styles weren't loadable:
-    ,cxx$
-This may cause errors in the sequel.
+(./build/build-process.listing)
+\openout5 = build-process.listing
+ (./build/build-process.listing) [17]
+\openout5 = build-process.listing
 
+(./build/build-process.listing)
+\openout5 = build-process.listing
+ (./build/build-process.listing) [18] [19]
+[20]
+\openout5 = build-process.listing
+ (./build/build-process.listing)
+\openout5 = build-process.listing
+ (./build/build-process.listing)
+\openout5 = build-process.listing
 
-! Package Listings Error: style cxx undefined.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.136 \begin{lstlisting}[style=cxx]
-                                 
-The style is not loadable. Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[3
-Missing character: There is no ’ (U+2019) in font ybvr8t!
+(./build/build-process.listing) [21
 Missing character: There is no ’ (U+2019) in font ybvr8t!
 ]
+\openout5 = build-process.listing
+ (./build/build-process.listing)
+\openout5 = build-process.listing
+ (./build/build-process.listing)
+\openout5 = build-process.listing
 
-! Package Listings Error: Couldn't load requested style.
+(./build/build-process.listing)
+\openout5 = build-process.listing
+ (./build/build-process.listing) [22]
+\openout5 = build-process.listing
 
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.164 \begin{lstlisting}[style=cxx]
-                                 
-The following styles weren't loadable:
-    ,cxx$
-This may cause errors in the sequel.
+(./build/build-process.listing)
+\openout5 = build-process.listing
+ (./build/build-process.listing)
+\openout5 = build-process.listing
 
-
-! Package Listings Error: style cxx undefined.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.164 \begin{lstlisting}[style=cxx]
-                                 
-The style is not loadable. Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[4] (./build/ctemplates.aux)
+(./build/build-process.listing) [23
+Missing character: There is no ’ (U+2019) in font ybvr8t!
+] (./build/build-process.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
@@ -1848,25 +1817,29 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 (\end occurred when \ifx on line 4 was incomplete)
 
 Here is how much of LuaTeX's memory you used:
- 30024 strings out of 476447
- 195335,1977958 words of node,token memory allocated
- 721 words of node memory still in use:
-   6 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 1 glyph, 7 attribute, 98 glue_spec,
- 7 attribute_list, 2 write nodes
-   avail lists: 1:2,2:2369,3:217,4:3947,5:3292,6:79,7:6330,9:9174,10:10,11:252
- 51341 multiletter control sequences out of 65536+600000
- 92 fonts using 17725659 bytes
- 118i,6n,131p,476b,2768s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</Users/ryanbaker/cxxsaturdays/tex/fonts/JetBrainsMono-SemiBold.ttf></Users/ryan
-baker/cxxsaturdays/tex/fonts/JetBrainsMono-Regular.ttf>{/usr/local/texlive/2024/
-texmf-dist/fonts/enc/dvips/baskervald/supp-ybv.enc}{/usr/local/texlive/2024/texm
-f-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texlive/2024/texmf-dist/fonts/typ
-e1/arkandis/baskervald/ybvb8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type
-1/arkandis/baskervald/ybvr8a.pfb>
-Output written on ctemplates.pdf (4 pages, 84615 bytes).
+ 30722 strings out of 476447
+ 125011,1977958 words of node,token memory allocated
+ 730 words of node memory still in use:
+   6 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 1 glyph, 8 attribute, 99 glue_spec,
+ 8 attribute_list, 2 write nodes
+   avail lists: 1:1,2:2354,3:843,4:1671,5:1344,6:156,7:5940,8:17,9:3713,10:14,11
+:453
+ 51620 multiletter control sequences out of 65536+600000
+ 111 fonts using 19997467 bytes
+ 118i,15n,136p,479b,2768s stack positions out of 10000i,1000n,20000p,200000b,200000s
+{/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/baskervald/supp-ybv.enc}</Us
+ers/ryanbaker/cxxsaturdays/tex/fonts/JetBrainsMono-Italic.ttf></Users/ryanbaker/
+cxxsaturdays/tex/fonts/JetBrainsMono-SemiBold.ttf></usr/local/texlive/2024/texmf
+-dist/fonts/opentype/public/lm/lmroman12-regular.otf></usr/local/texlive/2024/te
+xmf-dist/fonts/opentype/public/kpfonts-otf/KpMath-Regular.otf></Users/ryanbaker/
+cxxsaturdays/tex/fonts/JetBrainsMono-Regular.ttf>{/usr/local/texlive/2024/texmf-
+dist/fonts/enc/dvips/base/8r.enc}</usr/local/texlive/2024/texmf-dist/fonts/type1
+/arkandis/baskervald/ybvb8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/
+arkandis/baskervald/ybvr8a.pfb>
+Output written on build-process.pdf (23 pages, 173956 bytes).
 
-PDF statistics: 48 PDF objects out of 1000 (max. 8388607)
- 33 compressed objects within 1 object stream
+PDF statistics: 129 PDF objects out of 1000 (max. 8388607)
+ 86 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 131072)
  16 words of extra memory for PDF output out of 10000 (max. 100000000)
 

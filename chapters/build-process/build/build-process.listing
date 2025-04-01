@@ -1,0 +1,3 @@
+$ clang++ -std=c++23 proj.cpp foo.cpp
+$ ./a.out
+fooing...
