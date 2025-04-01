@@ -4,6 +4,8 @@ import subprocess
 from backup import create_backup
 from fileutils import *
 from pathlib import Path
+import time
+from concurrent.futures import ProcessPoolExecutor, as_completed
 
 
 rootdir = "/Users/ryanbaker/cxxsaturdays"
@@ -22,29 +24,35 @@ def clean_build_dir(builddir: str) -> None:
     except Exception as e:
         print(e) 
 
+def build_chapter(i: int, chapter: str) -> str:
+    chapter_path = os.path.join(rootdir, "chapters", chapter)
+    if not os.path.isdir(chapter_path):
+        return f"  {i:>3}  {chapter:<26}  ❌ Invalid directory"
+
+    try:
+        start = time.time()
+        result = subprocess.run(build_command(chapter), shell=True, cwd=chapter_path, capture_output=True, text=True)
+        end = time.time()
+
+        if (result.returncode == 0):
+            return f"  {i:>3}  {chapter:<26}  ✅ TeX compiled successfully  {end - start:.2f}s"
+        else:
+            return f"  {i:>3}  {chapter:<26}  ❌ TeX compilation failed     {end - start:.2f}s"
+    except Exception as e:
+        return f"  {i:>3}  {chapter:<26}  ❌ Error: {str(e)}" 
+
+
 def build_all():
-    n_jobs: int = len(os.listdir(rootdir + "/chapters"))
-    print()
-    print("=================================================================")
-    print("  Job  Chapter                     Status                        ")
-    print("-----------------------------------------------------------------")
+    print("\n========================================================================")
+    print("  Job  Chapter                     Status                        Time   ")
+    print("------------------------------------------------------------------------")
 
-    for i, chapter in enumerate(os.listdir(rootdir + "/chapters")):
-        chapter_path = os.path.join(rootdir, "chapters", chapter)
-        assert(os.path.isdir(chapter_path))
-        try:
-            print(f"  {i:>3}  {chapter:<26}  ", end='')
-            result = subprocess.run(build_command(chapter), shell=True, cwd=chapter_path, capture_output=True, text=True)
-            if (result.returncode == 0):
-                #clean_build_dir(os.path.join(chapter_path, "build"))
-                print("✅ TeX compiled successfully")
-            else:
-                print("❌ TeX compilation failed")
-        except Exception as e:
-            print(e) 
-            sys.exit(1)
+    with ProcessPoolExecutor() as executor:
+        future_to_chapter = {executor.submit(build_chapter, i, chapter): chapter for i, chapter in enumerate(os.listdir(rootdir + "/chapters"))}
+        for future in as_completed(future_to_chapter):
+            print(future.result())
 
-    print("-----------------------------------------------------------------")
+    print("------------------------------------------------------------------------")
 
 
 if __name__ == "__main__":
