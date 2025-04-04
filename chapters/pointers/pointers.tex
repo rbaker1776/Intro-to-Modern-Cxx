@@ -1,0 +1,78 @@
+\documentclass[12pt]{article}
+
+\usepackage{/Users/ryanbaker/cxxsaturdays/tex/preamble}
+
+\begin{document}
+
+\tableofcontents
+
+\pagebreak
+
+\section{Pointers}
+
+\noindent
+A \textbf{pointer} is a variable that represents a memory address, often the address of another variable.
+Pointers ``point'' to locations in memory and allow indirect access to the values stored there.
+
+\subsection{Declaring and Defining Pointers}
+
+\noindent
+To declare a pointer, use an asterisk \inlinecxx{*} and specify the type of data it points to:
+
+\begin{cxx}{}
+int* ptr; // declares a pointer to an int
+\end{cxx}
+
+\noindent
+To make a pointer ``point'' to a variable, use the address-of operator \inlinecxx{&}:
+
+\begin{cxx}{}
+int* ptr;
+int x {};
+ptr = &x; // 'point' ptr to the address of x
+\end{cxx}
+
+\subsection{Using Pointers}
+
+\noindent
+To access the value pointed to, we use the dereference operator \inlinecxx{*}:
+
+\begin{cxx}{dereference.cpp}
+#include <iostream>
+
+int main()
+{
+	int x { 42 };
+	int* ptr { &x };
+	std::cout << "x = " << *ptr << std::endl;
+}
+\end{cxx}
+
+\begin{terminal}
+$ clang++ -std=c++23 dereference.cpp
+$ ./a.out
+x = 42
+\end{terminal}
+
+\noindent
+Since pointers provide direct memory access, they can also be used to modify variables indirectly:
+
+\begin{cxx}{increment.cpp}
+#include <iostream>
+
+int main()
+{
+	int x { 42 };
+	int* ptr { &x };
+	(*ptr)++;
+	std::cout << "x = " << x << std::endl;
+}
+\end{cxx}
+
+\begin{terminal}
+$ clang++ -std=c++23 increment.cpp
+$ ./a.out
+x = 43
+\end{terminal}
+
+\end{document}
