@@ -1,0 +1,189 @@
+\documentclass[12pt]{article}
+
+\usepackage{/Users/ryanbaker/cxxsaturdays/tex/preamble}
+
+\begin{document}
+
+\tableofcontents
+
+\pagebreak
+
+\section{Memory Safety}
+
+\noindent
+Memory safety refers to the concept of ensuring that a program does not access memory in an unintended or unsafe manner.
+This can involve issues such as out-of-bounds access, null pointer dereferencing, or memory leaks, all of which can lead to undefined behavior, crashes, or security vulnerabilities.
+In C++, memory safety is a critical concern due to the language's low-level features and manual memory management capabilities, which allow developers more control but also more responsibility.
+
+\subsection{Common Memory Safety Issues}
+
+\noindent
+Before diving into strategies for improving memory safety, let's examine some of the most common issues developers face in C++ programs.
+
+\subsubsection{Buffer Overflows}
+
+\noindent
+Buffer overflows occur when a program writes past the end of an array (a buffer), corrupting adjacent memory.
+They’re a common source of security vulnerabilities, as attackers can exploit them to inject or execute arbitrary code.
+
+\begin{cxx}{overflow.cpp}
+#include <iostream>
+
+int main()
+{
+    char buffer[10];
+    strcpy(buffer, "This is too long for the buffer");
+}
+\end{cxx}
+
+\subsubsection{\inlinecxx{nullptr} Dereferencing}
+
+\noindent
+Dereferencing a \inlinecxx{NULL} pointer causes undefined behavior and can lead to program crashes:
+
+\begin{cxx}{}
+int* ptr { nullptr };
+*ptr = 10;
+\end{cxx}
+
+\subsubsection{Dangling Pointers}
+
+\noindent
+A dangling pointer is a pointer that references a memory location after the object that it points to has been deallocated.
+Dereferencing a pointer leads to undefined behavior:
+
+\begin{cxx}{}
+int* ptr { new int };
+delete ptr;
+*ptr = 10;
+\end{cxx}
+
+\subsubsection{Memory Leaks}
+
+\noindent
+Memory leaks occur when a program allocates memory but fails to deallocate it, causing the program to consume ever-increasing amounts of memory.
+Usually this happens when a call to \inlinecxx{delete} does not follow a call to \inlinecxx{new}.
+
+\subsection{Smart Pointers}
+
+\noindent
+\textbf{Smart pointers} are wrapper classes that manage the lifetime of dynamically allocated objects.
+Unlike raw pointers, which require explicit memory management (using \inlinecxx{new} and \inlinecxx{delete}), smart pointers automatically handle memory cleanup.
+Smart pointers are a critical component of RAII (Resource Acquisition Is Initialization), a C++ programming paradigm that ensures resources are properly cleaned up when an object goes out of scope.
+
+\vspace{1em}
+\noindent
+C++ offers several types of smart pointers, each designed for different use cases.
+The most commonly used smart pointers are \inlinecxx{std::unique_ptr}, \inlinecxx{std::shared_ptr}, and \inlinecxx{std::weak_ptr}, all of which are defined in the \inlinecxx{<memory>} header.
+
+\subsubsection{Unique Pointer}
+
+\noindent
+Unique pointers are smart pointers that own an object exclusively.
+They help to ensure that the resource managed is freed when the pointer goes out of scope.
+A unique pointer cannot be copied.
+Here is a simplified implementation of the unique pointer class:
+
+\begin{cxx}{uniqueptr.h}
+template<class T>
+class UniquePtr
+{
+private:
+    T* ptr;
+
+public:
+    unique_ptr(): ptr(nullptr) {};
+    unique_ptr(T* ptr): ptr(ptr) {}
+
+    unique_ptr(const unique_ptr&) = delete;
+    unique_ptr& operator=(const unique_ptr&) = delete;
+
+    ~unique_ptr()
+    {
+        delete ptr;
+    }
+
+    T* operator->() { return ptr; }
+};
+\end{cxx}
+
+\noindent
+Here is an example of using \inlinecxx{std::unique_ptr}:
+
+\begin{cxx}{}
+#include <iostream>
+#include <memory>
+
+int main()
+{
+	std::unique_ptr<int> ptr = std::make_unique<int>(10);
+	std::cout << *ptr << std::endl;
+}
+\end{cxx}
+
+\subsubsection{Shared Pointer}
+
+\noindent
+A shared pointer allows multiple pointers to share ownership of a resource.
+The resource is only freed when the last reference is destroyed.
+This is managed by a reference count, which tracks how many shared pointers are sharing the resource:
+
+\begin{cxx}{shared.cpp}
+#include <iostream>
+#include <memory>
+
+class MyClass
+{
+public:
+	MyClass() { std::cout << "constructed" << std::endl; }
+	~MyClass() { std::cout << "destroyed" << std::endl; }
+};
+
+int main()
+{
+	std::shared_ptr<MyClass> ptr { nullptr };
+	{
+		std::shared_ptr<MyClass> myobj { std::make_shared<MyClass>() };
+		ptr = myobj;
+	}
+	std::cout << "left scope" << std::endl;
+}
+\end{cxx}
+
+\subsubsection{Weak Pointer}
+
+\noindent
+A \inlinecxx{std::weak_ptr} is used to ``observe'' an object that is managed by a shared pointer without affecting its reference count.
+Weak pointers can be constructed from shared pointers:
+
+\begin{cxx}{weak.cpp}
+#include <iostream>
+#include <memory>
+
+int main()
+{
+    std::weak_ptr<int> weak;
+	std::shared_ptr<int> s;
+
+    {
+        std::shared_ptr<int> shared = std::make_shared<int>(42);
+        weak = shared;
+
+        std::cout << "Inside block: weak expired? " 
+                  << std::boolalpha << weak.expired() << "\n";
+    }
+
+    std::cout << "Outside block: weak expired? " 
+              << weak.expired() << "\n";
+
+    if (auto locked = weak.lock())
+	{
+        std::cout << "Value: " << *locked << "\n";
+    } else
+	{
+        std::cout << "Object no longer exists.\n";
+    }
+}
+\end{cxx}
+
+\end{document}

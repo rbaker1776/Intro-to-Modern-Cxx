@@ -1,0 +1,367 @@
+\documentclass[12pt]{article}
+
+\usepackage{/users/ryanbaker/cxxsaturdays/tex/preamble}
+
+\begin{document}
+
+\tableofcontents
+
+\pagebreak
+
+\section{Type Safety}
+
+\noindent
+\textbf{Type safety} refers to the enforcement of correct and consistent use of data types within a program.
+A language is typically considered type-safe if it prevents operations that are invalid for a given type.
+In C++, type safety is particularly important because improper use of types can easily result in subtle bugs, crashes, or undefined behavior.
+
+\vspace{1em}
+\noindent
+C++ is often described as a statically typed language, meaning type checking is performed at compile time.
+For example, the following code results in a compile-time error rather than a run-time failure:
+
+\begin{cxx}{}
+int x = "forty-two";
+\end{cxx}
+
+\noindent
+This behavior prevents many categories of type-related bugs from ever making it into a running program.
+However, C++ is also a highly flexible language--and this flexibility includes numerous implicit type conversions, some of which can introduce subtle, silent bugs.
+While this freedom is powerful, it can be dangerous if used carelessly or without full understanding.
+Consider the following example:
+
+\begin{cxx}{}
+#include <iostream>
+
+int main()
+{
+	int x { -1 };
+	unsigned y { 1 };
+	
+	std::cout << (x < y) << std::endl;
+}
+\end{cxx}
+
+\noindent
+Despite what might seem like an intuitive comparison, this program will confidently assert that 1 is less than -1.
+This happens because when comparing an \inlinecxx{int} and an \inlinecxx{unsigned}, C++ is forced to reconcile the type difference and does so by turning the signed integer \inlinecxx{x} into an unsigned value.
+Since \inlinecxx{x} is negative, the conversion results in a large positive number, which distorts the intended comparison.
+An even more egregious example:
+
+\begin{cxx}{}
+#include <iostream>
+
+int main()
+{
+	float f = 0.1;
+	std::cout << (f == 0.1) << std::endl;
+}
+\end{cxx}
+
+\noindent
+This program, surprisingly, prints 0, indicating that \inlinecxx{f} does not equal the value we assigned to it just a line before.
+The reason for this discrepancy lies in a subtle detail: \inlinecxx{0.1} is a \inlinecxx{double} literal, which holds more precision than the \inlinecxx{float f}.
+When the \inlinecxx{double} value is assigned to the \inlinecxx{float}, it loses precision, causing the comparison to fail.
+For a deeper explanation of this issue, feel free to check out my talk: ``\textsl{Messing with Floating Point.}''
+
+
+\noindent
+A type-safe program aims to eliminate these classes of bugs by ensuring that:
+
+\begin{itemize}
+	\item Types are not implicitly converted in ways that compromise correctness.
+	\item Operations are performed only on types that support them.
+	\item The program behaves predictably with respect to the types involved.
+\end{itemize}
+
+\noindent
+In the sections that follow, we’ll explore type-safe programming in C++ and discuss the tools, practices, and patterns we can use to write safer, more predictable code.
+
+\pagebreak
+
+\subsection{Strong Type Definitions}
+
+\noindent
+A \textbf{strong typedef} creates a new, distinct type at the language level.
+This can help enforce type safety by ensuring that different types--even if they share the same underlying representation--can't be mixed up by accident.
+Consider the following example where we use a function to calculate the final price of a sale:
+
+\begin{cxx}{salestax.cpp}
+#include <iostream>
+
+double final_price(double p, double t)
+{
+	return (1.0 + t) * p;
+}
+
+int main()
+{
+	double p = 5499.99;
+	double t = 0.06;
+	std::cout << final_price(t, p) << std::endl;
+}
+\end{cxx}
+
+\begin{terminal}
+$ clang++ -std=c++23 salestax.cpp
+$ ./a.out
+330.059
+\end{terminal}
+
+\noindent
+The user of this program will no doubt be delighted to discover that their \$5500 purchase will only cost them \$330.
+The cause of this error is simple--though easy to miss:
+We passed the parameters in the wrong order to \inlinecxx{final_price()}.
+C++ gives us the tools to prevent this kind of mix-up by using the type system more intentionally.
+We can define strong types that make it impossible to confuse parameters with the same underlying type but different meaning.
+
+\vspace{1em}
+\noindent
+A naive attempt at a solution might involve introducing type aliases for prices and tax rates, hoping to prevent ourselves from accidentally mixing them up:
+
+\begin{cxx}{salestax2.cpp}
+#include <iostream>
+
+using Price = double;
+using TaxRate = double;
+
+Price final_price(Price p, TaxRate t)
+{
+	return (1.0 + t) * p;
+}
+
+int main()
+{
+	Price p = 5499.99;
+	TaxRate t = 0.06;
+	std::cout << final_price(t, p) << std::endl;
+}
+\end{cxx}
+
+\noindent
+However, this solution offers little benefit beyond improved readability.
+The compiler still treats \inlinecxx{Price} and \inlinecxx{TaxRate} as identical types, so our bug slips through unnoticed.
+To make the compiler enforce the distinction, we must define entirely new types--rather than simple aliases:
+
+\begin{cxx}{salestax3.cpp}
+#include <iostream>
+
+struct Price { double value; };
+struct TaxRate { double value; };
+
+Price final_price(Price p, TaxRate t)
+{
+	return { (1.0 + t.value) * p.value };
+}
+
+int main()
+{
+	Price p { 5499.99 };
+	TaxRate t { 0.06 };
+	std::cout << final_price(t, p).value << std::endl;
+}
+\end{cxx}
+
+\begin{terminal}
+$ clang++ -std=c++23 salestax3.cpp
+15:15: error: no matching function for call to 'final_price'
+   15 |  std::cout << final_price(t, p).value << std::endl;
+\end{terminal}
+
+\noindent
+It appears the compiler has finally caught on to our antics, and we'll be forced to pay full price.
+That’s a win for correctness.
+However, perhaps we can do better still.
+A codebase littered with \inlinecxx{.value} member accesses isn’t exactly one I’d be thrilled to work in.
+Perhaps we can clean this up using templates:
+
+\begin{cxx}{safetype.h}
+template<class T, class Tag>
+class SafeType
+{
+private:
+	T value;
+
+public:
+	SafeType(T t): value(t) {}
+	
+	template<class U, class UTag>
+	SafeType(const SafeType<U, UTag>&) = delete;
+
+	operator T() const { return value; }
+};
+\end{cxx}
+
+\noindent
+The templated class above allows us to define strong types that the compiler treats as distinct, while still allowing implicit conversion to the underlying type when needed.
+This strikes a practical balance: we get safety from mismatched arguments without giving up ergonomics.
+
+\begin{cxx}{salestax4.cpp}
+#include "safetype.h"
+#include <iostream>
+
+using Price = SafeType<double, struct Price_>;
+using TaxRate = SafeType<double, struct TaxRate_>;
+
+Price final_price(Price p, TaxRate t)
+{
+	return { (1.0 + t) * p };
+}
+
+int main()
+{
+	Price p(5499.99);
+	TaxRate t(0.06);
+	std::cout << double(final_price(p, t)) << std::endl;
+}
+\end{cxx}
+
+\noindent
+We can take this idea one step further by inheriting from the \inlinecxx{SafeType} template instead of using a type alias.
+This approach tends to produce cleaner and more informative error messages when something goes wrong:
+
+\begin{cxx}{salestax5.cpp}
+#include "safetype.h"
+#include <iostream>
+
+struct Price: SafeType<double, Price> { using SafeType::SafeType; };
+struct TaxRate: SafeType<double, TaxRate> { using SafeType::SafeType; };
+
+Price final_price(Price p, TaxRate t)
+{
+	return { (1.0 + t) * p };
+}
+
+int main()
+{
+	Price p(5499.99);
+	TaxRate t(0.06);
+	std::cout << double(final_price(t, p)) << std::endl;
+}
+\end{cxx}
+
+\subsubsection{The Type-Safe \inlinecxx{enum}}
+
+There is an even simpler solution that can be used to create strong type definitions to distinguish between underlying integral types.
+This is achieved through the use of \inlinecxx{enum class}:
+
+\begin{cxx}{}
+#include <iostream>
+
+enum class Apple: uint32_t {};
+enum class Orange: uint32_t {};
+
+int main()
+{
+	Apple a { 10 };
+	Orange b { 20 };
+	// error, cannot compare Apples and Oranges
+	std::cout << (a < b) << std::endl;
+}
+\end{cxx}
+
+\noindent In this example, \inlinecxx{Apple} and \inlinecxx{Orange} are both defined as \inlinecxx{enum class} types, backed by \inlinecxx{uint32_t}.
+The key difference here is that \inlinecxx{enum class} creates distinct types, preventing the comparison of these two, even though they share the same underlying type.
+This ensures type safety and avoids unintended type mixing, which can be a common issue in less strict systems.
+
+\subsection{Type Punning}
+
+\noindent
+Type punning refers to treating memory that holds some data type as if it holds a differnet data type.
+This can be achived in a number of ways.
+Most simply is the \inlinecxx{union} construct:
+
+\begin{cxx}{}
+#include <iostream>
+
+union FloatInt
+{
+    float f;
+    int i;
+};
+
+int main()
+{
+    FloatInt pun;
+    pun.f = 3.14;
+    std::cout << pun.i << std::endl;
+}
+\end{cxx}
+
+\noindent
+In this example, \inlinecxx{pun.i} and \inlinecxx{pun.f} occupy the same memory. Another way to achieve type punning is to use pointer casting:
+
+\begin{cxx}{}
+#include <iostream>
+
+int main()
+{
+	int x { 400 };
+	double d { *(double*)(&x) };
+	std::cout << d << std::endl;
+}
+\end{cxx}
+
+\noindent
+The above exmaple is generally terrible, not least because it reads four bytes beyond the indended value of \inlinecxx{x}.
+
+\subsection{Type Casting}
+
+\noindent
+C++ offers several casting operators to convert variables from one type to another.
+These casts provide more control and type safety compared to C-style casts.
+
+\subsubsection{\inlinecxx{static_cast}}
+
+\noindent
+\inlinecxx{static_cast} performs a non-polymorphic conversion between types.
+It's checked at compile time (hence static), and is generally safe for conversions like \inlinecxx{int} to \inlinecxx{double}.
+
+\begin{cxx}{}
+int x { 10 };
+double d { static_cast<double>(x) };
+\end{cxx}
+
+\subsubsection{\inlinecxx{dynamic_cast}}
+
+\noindent
+\inlinecxx{dynamic_cast} is used for run-time polymorphic type conversions, specifically with inheritance.
+It checks the type of the object at run-time and returns a valid pointer if the conversion is possible, else \inlinecxx{nullptr}.
+
+\begin{cxx}{}
+class Base
+{
+	virtual void foo() {}
+};
+
+class Derived: public Base {};
+
+int main()
+{
+	Base* b = new Derived();
+	Derived* d = dynamic_cast<Derived*>(b);
+}
+\end{cxx}
+
+\subsubsection{\inlinecxx{const_cast}}
+
+\noindent
+\inlinecxx{const_cast} modifies the constness or volatility of a variable:
+
+\begin{cxx}{}
+const int x { 20 };
+int* non_const { const_cast<int*>(&c) };
+\end{cxx}
+
+\subsubsection{\inlinecxx{reinterpret_cast}}
+
+\noindent
+\inlinecxx{reinterpret_cast} is the most powerful and potentially dangerous cast.
+It reinterprets the underlying bit pattern as a different type:
+
+\begin{cxx}{}
+int* ptr { new int(30) };
+unsigned address { reinterpret_cast<unsigned>(ptr) };
+\end{cxx}
+
+\end{document}

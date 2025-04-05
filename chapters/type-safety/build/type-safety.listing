@@ -1,0 +1,2 @@
+int* ptr { new int(30) };
+unsigned address { reinterpret_cast<unsigned>(ptr) };

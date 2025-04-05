@@ -1,7 +1,7 @@
 This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2024.12.24)  5 APR 2025 17:53
  restricted system commands enabled.
-**ftemplates.tex
-(./ftemplates.tex
+**type-safety.tex
+(./type-safety.tex
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
 Lua module: luaotfload 2024-02-14 3.28 Lua based OpenType font support
@@ -58,7 +58,7 @@ ve/2024/texmf-var/luatex-cache/generic/names/luaotfload-names.luc.gz)
 \belowcaptionskip=\skip49
 \bibindent=\dimen139
 )
-(../../tex/preamble.sty
+(/users/ryanbaker/cxxsaturdays/tex/preamble.sty
 (/usr/local/texlive/2024/texmf-dist/tex/latex/xcolor/xcolor.sty
 Package: xcolor 2023/11/15 v3.01 LaTeX color extensions (UK)
 
@@ -1553,8 +1553,8 @@ LaTeX Font Info:    Trying to load font information for T1+ybv on input line 32
 (/usr/local/texlive/2024/texmf-dist/tex/latex/baskervald/t1ybv.fd
 File: t1ybv.fd 2010/07/13 Fontinst v1.933 font definitions for T1/ybv.
 ))
-(./build/ftemplates.aux)
-\openout1 = ftemplates.aux
+(./build/type-safety.aux)
+\openout1 = type-safety.aux
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 5.
 LaTeX Font Info:    ... okay on input line 5.
@@ -1609,6 +1609,7 @@ LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
 (Font)                  OT1/cmss/bx/n --> TU/KpSans(0)/b/n on input line 5.
 LaTeX Info: Redefining \idotsint on input line 5.
 
+(./build/type-safety.toc
 (/usr/local/texlive/2024/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2024/02/21 1.10 listings language file
 )
@@ -1619,561 +1620,89 @@ File: lstlang1.sty 2024/02/21 1.10 listings language file
 File: lstmisc.sty 2024/02/21 1.10 (Carsten Heinz)
 )
 LaTeX Font Info:    Font shape `TU/JetBrainsMono(0)/m/n' will be
-(Font)              scaled to size 10.125pt on input line 10.
+(Font)              scaled to size 10.125pt on input line 3.
+)
+\tf@toc=\write4
 
-
-! Package Listings Error: Couldn't load requested style.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.15 \begin{lstlisting}[style=cxx]
-                                
-The following styles weren't loadable:
-    ,cxx$
-This may cause errors in the sequel.
-
-
-! Package Listings Error: style cxx undefined.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.15 \begin{lstlisting}[style=cxx]
-                                
-The style is not loadable. Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-! Package Listings Error: Couldn't load requested style.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.25 \begin{lstlisting}[style=cxx]
-                                
-The following styles weren't loadable:
-    ,cxx$
-This may cause errors in the sequel.
-
-
-! Package Listings Error: style cxx undefined.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.25 \begin{lstlisting}[style=cxx]
-                                
-The style is not loadable. Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-! Package Listings Error: Couldn't load requested style.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.35 \begin{lstlisting}[style=cxx]
-                                
-The following styles weren't loadable:
-    ,cxx$
-This may cause errors in the sequel.
-
-
-! Package Listings Error: style cxx undefined.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.35 \begin{lstlisting}[style=cxx]
-                                
-The style is not loadable. Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-! Package Listings Error: Couldn't load requested style.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.47 \begin{lstlisting}[style=cxx]
-                                
-The following styles weren't loadable:
-    ,cxx$
-This may cause errors in the sequel.
-
-
-! Package Listings Error: style cxx undefined.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.47 \begin{lstlisting}[style=cxx]
-                                
-The style is not loadable. Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[1
+\openout4 = type-safety.toc
+ [1
 
 {/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+\g__tcobox_out_iow=\write5
 
-! Package Listings Error: Couldn't load requested style.
+\openout5 = type-safety.listing
 
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.60 \begin{lstlisting}[style=cxx]
-                                
-The following styles weren't loadable:
-    ,cxx$
-This may cause errors in the sequel.
+(./build/type-safety.listing
+LaTeX Font Info:    Font shape `TU/JetBrainsMono(0)/m/n' will be
+(Font)              scaled to size 8.4375pt on input line 1.
+)
+\openout5 = type-safety.listing
+ (./build/type-safety.listing)
+\openout5 = type-safety.listing
 
+(./build/type-safety.listing) [2]
+LaTeX Font Info:    Font shape `T1/ybv/m/sl' in size <12> not available
+(Font)              Font shape `T1/ybv/m/it' tried instead on input line 65.
+LaTeX Font Info:    Trying to load font information for TS1+ybv on input line 7
+2.
 
-! Package Listings Error: style cxx undefined.
+(/usr/local/texlive/2024/texmf-dist/tex/latex/baskervald/ts1ybv.fd
+File: ts1ybv.fd 2010/07/13 Fontinst v1.933 font definitions for TS1/ybv.
+) [3
+Missing character: There is no ’ (U+2019) in font ybvr8t!
+]
+\openout5 = type-safety.listing
 
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.60 \begin{lstlisting}[style=cxx]
-                                
-The style is not loadable. Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
+LaTeX Font Info:    Font shape `TU/JetBrainsMono(0)/m/it' will be
+(Font)              scaled to size 10.125pt on input line 103.
+ (./build/type-safety.listing)
+\openout5 = type-safety.listing
 
-
-! Package Listings Error: Couldn't load requested style.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.74 \begin{lstlisting}[style=cxx]
-                                
-The following styles weren't loadable:
-    ,cxx$
-This may cause errors in the sequel.
-
-
-! Package Listings Error: style cxx undefined.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.74 \begin{lstlisting}[style=cxx]
-                                
-The style is not loadable. Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-\g__tcobox_out_iow=\write4
-
-\openout4 = ftemplates.listing
 LaTeX Font Info:    Font shape `TU/JetBrainsMono(0)/b/n' will be
-(Font)              scaled to size 10.125pt on input line 100.
-(./build/ftemplates.listing) [2]
+(Font)              scaled to size 10.125pt on input line 109.
+ (./build/type-safety.listing)
+\openout5 = type-safety.listing
 
-! Package Listings Error: Couldn't load requested style.
+(./build/type-safety.listing) [4]
+\openout5 = type-safety.listing
+ (./build/type-safety.listing) [5]
+\openout5 = type-safety.listing
 
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.113 \begin{lstlisting}[style=cxx]
-                                 
-The following styles weren't loadable:
-    ,cxx$
-This may cause errors in the sequel.
+(./build/type-safety.listing)
+\openout5 = type-safety.listing
+ (./build/type-safety.listing)
+\openout5 = type-safety.listing
 
-
-! Package Listings Error: style cxx undefined.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.113 \begin{lstlisting}[style=cxx]
-                                 
-The style is not loadable. Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-! Package Listings Error: Couldn't load requested style.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.127 \begin{lstlisting}[style=cxx]
-                                 
-The following styles weren't loadable:
-    ,cxx$
-This may cause errors in the sequel.
-
-
-! Package Listings Error: style cxx undefined.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.127 \begin{lstlisting}[style=cxx]
-                                 
-The style is not loadable. Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[3]
-
-! Package Listings Error: Couldn't load requested style.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.141 \begin{lstlisting}[style=cxx]
-                                 
-The following styles weren't loadable:
-    ,cxx$
-This may cause errors in the sequel.
-
-
-! Package Listings Error: style cxx undefined.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.141 \begin{lstlisting}[style=cxx]
-                                 
-The style is not loadable. Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-! Package Listings Error: Couldn't load requested style.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.146 \begin{lstlisting}[style=cxx]
-                                 
-The following styles weren't loadable:
-    ,cxx$
-This may cause errors in the sequel.
-
-
-! Package Listings Error: style cxx undefined.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.146 \begin{lstlisting}[style=cxx]
-                                 
-The style is not loadable. Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-! Package Listings Error: Couldn't load requested style.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.165 \begin{lstlisting}[style=cxx]
-                                 
-The following styles weren't loadable:
-    ,cxx$
-This may cause errors in the sequel.
-
-
-! Package Listings Error: style cxx undefined.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.165 \begin{lstlisting}[style=cxx]
-                                 
-The style is not loadable. Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-! Package Listings Error: Couldn't load requested style.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.173 \begin{lstlisting}[style=cxx]
-                                 
-The following styles weren't loadable:
-    ,cxx$
-This may cause errors in the sequel.
-
-
-! Package Listings Error: style cxx undefined.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.173 \begin{lstlisting}[style=cxx]
-                                 
-The style is not loadable. Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-\openout4 = ftemplates.listing
-(./build/ftemplates.listing) [4
-Missing character: There is no — (U+2014) in font ybvr8t!
+(./build/type-safety.listing) [6
+Missing character: There is no ’ (U+2019) in font ybvr8t!
+Missing character: There is no ’ (U+2019) in font ybvr8t!
+Missing character: There is no ’ (U+2019) in font ybvr8t!
 ]
+\openout5 = type-safety.listing
+ (./build/type-safety.listing) [7]
+\openout5 = type-safety.listing
+ (./build/type-safety.listing) [8]
+\openout5 = type-safety.listing
 
-! Package Listings Error: Couldn't load requested style.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.213 \begin{lstlisting}[style=cxx]
-                                 
-The following styles weren't loadable:
-    ,cxx$
-This may cause errors in the sequel.
-
-
-! Package Listings Error: style cxx undefined.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.213 \begin{lstlisting}[style=cxx]
-                                 
-The style is not loadable. Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[5
-Missing character: There is no — (U+2014) in font ybvr8t!
-]
-
-! Package Listings Error: Couldn't load requested style.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.233 \begin{lstlisting}[style=cxx]
-                                 
-The following styles weren't loadable:
-    ,cxx$
-This may cause errors in the sequel.
+(./build/type-safety.listing)
+\openout5 = type-safety.listing
+ (./build/type-safety.listing) [9]
+Overfull \hbox (10.18475pt too wide) in paragraph at lines 316--319
+[][][] \T1/ybv/m/n/12 per-forms a non-polymorphic con-ver-sion be-tween types. 
+It's checked
+ []
 
 
-! Package Listings Error: style cxx undefined.
+\openout5 = type-safety.listing
+(./build/type-safety.listing)
+\openout5 = type-safety.listing
+ (./build/type-safety.listing)
+\openout5 = type-safety.listing
 
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.233 \begin{lstlisting}[style=cxx]
-                                 
-The style is not loadable. Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-! Package Listings Error: Couldn't load requested style.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.251 \begin{lstlisting}[style=cxx]
-                                 
-The following styles weren't loadable:
-    ,cxx$
-This may cause errors in the sequel.
-
-
-! Package Listings Error: style cxx undefined.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.251 \begin{lstlisting}[style=cxx]
-                                 
-The style is not loadable. Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[6]
-
-! Package Listings Error: Couldn't load requested style.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.259 \begin{lstlisting}[style=cxx]
-                                 
-The following styles weren't loadable:
-    ,cxx$
-This may cause errors in the sequel.
-
-
-! Package Listings Error: style cxx undefined.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.259 \begin{lstlisting}[style=cxx]
-                                 
-The style is not loadable. Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-! Package Listings Error: Couldn't load requested style.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.270 \begin{lstlisting}[style=cxx]
-                                 
-The following styles weren't loadable:
-    ,cxx$
-This may cause errors in the sequel.
-
-
-! Package Listings Error: style cxx undefined.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.270 \begin{lstlisting}[style=cxx]
-                                 
-The style is not loadable. Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-\openout4 = ftemplates.listing
-(./build/ftemplates.listing) [7]
-Package mdframed Info: Not enough space on this page on input line 302.
-
-
-! Package Listings Error: Couldn't load requested style.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.310 \begin{lstlisting}[style=cxx]
-                                 
-The following styles weren't loadable:
-    ,cxx$
-This may cause errors in the sequel.
-
-
-! Package Listings Error: style cxx undefined.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.310 \begin{lstlisting}[style=cxx]
-                                 
-The style is not loadable. Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-! Package Listings Error: Couldn't load requested style.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.316 \begin{lstlisting}[style=cxx]
-                                 
-The following styles weren't loadable:
-    ,cxx$
-This may cause errors in the sequel.
-
-
-! Package Listings Error: style cxx undefined.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.316 \begin{lstlisting}[style=cxx]
-                                 
-The style is not loadable. Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-! Package Listings Error: Couldn't load requested style.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.328 \begin{lstlisting}[style=cxx]
-                                 
-The following styles weren't loadable:
-    ,cxx$
-This may cause errors in the sequel.
-
-
-! Package Listings Error: style cxx undefined.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.328 \begin{lstlisting}[style=cxx]
-                                 
-The style is not loadable. Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-\openout4 = ftemplates.listing
-(./build/ftemplates.listing) [8]
-
-! Package Listings Error: Couldn't load requested style.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.357 \begin{lstlisting}[style=cxx]
-                                 
-The following styles weren't loadable:
-    ,cxx$
-This may cause errors in the sequel.
-
-
-! Package Listings Error: style cxx undefined.
-
-See the Listings package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.357 \begin{lstlisting}[style=cxx]
-                                 
-The style is not loadable. Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[9] (./build/ftemplates.aux)
+(./build/type-safety.listing) [10]
+\openout5 = type-safety.listing
+ (./build/type-safety.listing) [11]
+(./build/type-safety.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
@@ -2186,25 +1715,28 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 (\end occurred when \ifx on line 4 was incomplete)
 
 Here is how much of LuaTeX's memory you used:
- 30132 strings out of 476447
- 156265,1977958 words of node,token memory allocated
+ 30283 strings out of 476447
+ 125009,1977958 words of node,token memory allocated
  721 words of node memory still in use:
    6 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 1 glyph, 7 attribute, 98 glue_spec,
  7 attribute_list, 2 write nodes
-   avail lists: 1:1,2:2148,3:229,4:2688,5:2416,6:72,7:5964,9:6278,10:14,11:317
- 51428 multiletter control sequences out of 65536+600000
- 92 fonts using 17725659 bytes
- 118i,6n,133p,476b,2768s stack positions out of 10000i,1000n,20000p,200000b,200000s
-{/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/baskervald/supp-ybv.enc}</Us
-ers/ryanbaker/cxxsaturdays/tex/fonts/JetBrainsMono-SemiBold.ttf></Users/ryanbake
-r/cxxsaturdays/tex/fonts/JetBrainsMono-Regular.ttf>{/usr/local/texlive/2024/texm
-f-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texlive/2024/texmf-dist/fonts/typ
-e1/arkandis/baskervald/ybvb8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type
-1/arkandis/baskervald/ybvr8a.pfb>
-Output written on ftemplates.pdf (9 pages, 106851 bytes).
+   avail lists: 1:1,2:2848,3:492,4:1880,5:1381,6:77,7:6007,8:1,9:4405,10:9,11:30
+5
+ 51460 multiletter control sequences out of 65536+600000
+ 101 fonts using 18760139 bytes
+ 118i,6n,136p,477b,2768s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</Users/ryanbaker/cxxsaturdays/tex/fonts/JetBrainsMono-SemiBold.ttf></Users/ryan
+baker/cxxsaturdays/tex/fonts/JetBrainsMono-Italic.ttf>{/usr/local/texlive/2024/t
+exmf-dist/fonts/enc/dvips/baskervald/supp-ybv.enc}{/usr/local/texlive/2024/texmf
+-dist/fonts/enc/dvips/base/8r.enc}</Users/ryanbaker/cxxsaturdays/tex/fonts/JetBr
+ainsMono-Regular.ttf></usr/local/texlive/2024/texmf-dist/fonts/type1/arkandis/ba
+skervald/ybvb8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/arkandis/bas
+kervald/ybvr8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/arkandis/bask
+ervald/ybvri8a.pfb>
+Output written on type-safety.pdf (11 pages, 138244 bytes).
 
-PDF statistics: 63 PDF objects out of 1000 (max. 8388607)
- 43 compressed objects within 1 object stream
+PDF statistics: 82 PDF objects out of 1000 (max. 8388607)
+ 56 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 131072)
  16 words of extra memory for PDF output out of 10000 (max. 100000000)
 
