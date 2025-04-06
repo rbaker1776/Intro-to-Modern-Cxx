@@ -3,7 +3,7 @@
 \contentsline {subsubsection}{\numberline {1.1.1}Text Replacement \lstinline [style=cxxstyle,escapechar=|]|\#define|}{2}{}%
 \contentsline {subsubsection}{\numberline {1.1.2}File Inclusion \lstinline [style=cxxstyle,escapechar=|]|\#include|}{6}{}%
 \contentsline {subsubsection}{\numberline {1.1.3}Header \texttt {.h} Files}{9}{}%
-\contentsline {subsubsection}{\numberline {1.1.4}Conditional Compilation}{10}{}%
+\contentsline {subsubsection}{\numberline {1.1.4}Conditional Compilation \lstinline [style=cxxstyle,escapechar=|]|\#if|, \lstinline [style=cxxstyle,escapechar=|]|\#ifdef|}{10}{}%
 \contentsline {subsubsection}{\numberline {1.1.5}Translation Units}{11}{}%
 \contentsline {subsection}{\numberline {1.2}The Compiler}{13}{}%
 \contentsline {subsubsection}{\numberline {1.2.1}The Compilation Process}{13}{}%

@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2024.12.24)  5 APR 2025 17:53
+This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2024.12.24)  6 APR 2025 13:51
  restricted system commands enabled.
 **build-process.tex
 (./build-process.tex
@@ -1543,11 +1543,11 @@ JetBrainsMono-Italic.ttf]:mode=base;script=latn;language=dflt;"
 
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
 (Font)                  OT1/cmtt/m/n --> TU/JetBrainsMono(1)/m/n on input line 
-32.
+33.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 (Font)                  OT1/cmtt/m/n --> TU/JetBrainsMono(1)/b/n on input line 
-32.
-LaTeX Font Info:    Trying to load font information for T1+ybv on input line 32
+33.
+LaTeX Font Info:    Trying to load font information for T1+ybv on input line 33
 .
 
 (/usr/local/texlive/2024/texmf-dist/tex/latex/baskervald/t1ybv.fd
@@ -1608,6 +1608,15 @@ LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
 (Font)                  OT1/cmss/bx/n --> TU/KpSans(0)/b/n on input line 5.
 LaTeX Info: Redefining \idotsint on input line 5.
+</Users/ryanbaker/Downloads/Gemini_Generated_Image_xs11vxxs11vxxs11 (1) (1).png
+, id=4, 698.21509pt x 281.57655pt>
+File: /Users/ryanbaker/Downloads/Gemini_Generated_Image_xs11vxxs11vxxs11 (1) (1
+).png Graphic file (type png)
+<use /Users/ryanbaker/Downloads/Gemini_Generated_Image_xs11vxxs11vxxs11 (1) (1)
+.png>
+Package luatex.def Info: /Users/ryanbaker/Downloads/Gemini_Generated_Image_xs11
+vxxs11vxxs11 (1) (1).png  used on input line 21.
+(luatex.def)             Requested size: 195.0pt x 78.63895pt.
 
 (./build/build-process.toc
 (/usr/local/texlive/2024/texmf-dist/tex/latex/listings/lstlang1.sty
@@ -1627,17 +1636,18 @@ LaTeX Font Info:    Font shape `TU/JetBrainsMono(0)/m/n' will be
 \openout4 = build-process.toc
  [1
 
-{/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Trying to load font information for TU+ybv on input line 18
+{/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}</Users/ry
+anbaker/Downloads/Gemini_Generated_Image_xs11vxxs11vxxs11 (1) (1).png>]
+LaTeX Font Info:    Trying to load font information for TU+ybv on input line 38
 .
-LaTeX Font Info:    No file TUybv.fd. on input line 18.
+LaTeX Font Info:    No file TUybv.fd. on input line 38.
 
 
 LaTeX Font Warning: Font shape `TU/ybv/m/n' undefined
-(Font)              using `TU/lmr/m/n' instead on input line 18.
+(Font)              using `TU/lmr/m/n' instead on input line 38.
 
 LaTeX Font Info:    Font shape `TU/JetBrainsMono(0)/b/n' will be
-(Font)              scaled to size 10.125pt on input line 31.
+(Font)              scaled to size 10.125pt on input line 51.
 \g__tcobox_out_iow=\write5
 
 \openout5 = build-process.listing
@@ -1734,7 +1744,7 @@ Missing character: There is no — (U+2014) in font ybvr8t!
 \openout5 = build-process.listing
  (./build/build-process.listing) [14]
 LaTeX Font Info:    Trying to load font information for TS1+ybv on input line 5
-41.
+61.
 
 (/usr/local/texlive/2024/texmf-dist/tex/latex/baskervald/ts1ybv.fd
 File: ts1ybv.fd 2010/07/13 Fontinst v1.933 font definitions for TS1/ybv.
@@ -1744,7 +1754,7 @@ File: ts1ybv.fd 2010/07/13 Fontinst v1.933 font definitions for TS1/ybv.
 (./build/build-process.listing)
 \openout5 = build-process.listing
  (./build/build-process.listing)
-Overfull \hbox (2.42366pt too wide) in paragraph at lines 557--558
+Overfull \hbox (2.42366pt too wide) in paragraph at lines 577--578
 []\T1/ybv/b/n/12 Loop Hoist-ing\T1/ybv/m/n/12 : Re-mov-ing re-peated com-pu-ta-t
 ions from a loop body: 
  []
@@ -1764,7 +1774,7 @@ ions from a loop body:
 (./build/build-process.listing)
 \openout5 = build-process.listing
  (./build/build-process.listing) [16]
-Package mdframed Info: Not enough space on this page on input line 641.
+Package mdframed Info: Not enough space on this page on input line 661.
 
 \openout5 = build-process.listing
 
@@ -1817,15 +1827,15 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 (\end occurred when \ifx on line 4 was incomplete)
 
 Here is how much of LuaTeX's memory you used:
- 30722 strings out of 476447
+ 30748 strings out of 476447
  125011,1977958 words of node,token memory allocated
  730 words of node memory still in use:
    6 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 1 glyph, 8 attribute, 99 glue_spec,
  8 attribute_list, 2 write nodes
-   avail lists: 1:1,2:2354,3:843,4:1671,5:1344,6:156,7:5940,8:17,9:3713,10:14,11
+   avail lists: 1:1,2:2354,3:843,4:1671,5:1344,6:156,7:5944,8:17,9:3713,10:14,11
 :453
- 51620 multiletter control sequences out of 65536+600000
- 111 fonts using 19997635 bytes
+ 51631 multiletter control sequences out of 65536+600000
+ 123 fonts using 20828571 bytes
  118i,15n,136p,479b,2768s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/baskervald/supp-ybv.enc}</Us
 ers/ryanbaker/cxxsaturdays/tex/fonts/JetBrainsMono-Italic.ttf></Users/ryanbaker/
@@ -1836,9 +1846,9 @@ cxxsaturdays/tex/fonts/JetBrainsMono-Regular.ttf>{/usr/local/texlive/2024/texmf-
 dist/fonts/enc/dvips/base/8r.enc}</usr/local/texlive/2024/texmf-dist/fonts/type1
 /arkandis/baskervald/ybvb8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/
 arkandis/baskervald/ybvr8a.pfb>
-Output written on build-process.pdf (23 pages, 173956 bytes).
+Output written on build-process.pdf (23 pages, 918758 bytes).
 
-PDF statistics: 129 PDF objects out of 1000 (max. 8388607)
+PDF statistics: 131 PDF objects out of 1000 (max. 8388607)
  86 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 131072)
  16 words of extra memory for PDF output out of 10000 (max. 100000000)

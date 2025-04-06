@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2024.12.24)  5 APR 2025 17:53
+This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2024.12.24)  6 APR 2025 13:35
  restricted system commands enabled.
 **ctemplates.tex
 (./ctemplates.tex
@@ -1855,7 +1855,7 @@ Here is how much of LuaTeX's memory you used:
  7 attribute_list, 2 write nodes
    avail lists: 1:2,2:2369,3:217,4:3947,5:3292,6:79,7:6330,9:9174,10:10,11:252
  51341 multiletter control sequences out of 65536+600000
- 92 fonts using 17725547 bytes
+ 92 fonts using 17725603 bytes
  118i,6n,131p,476b,2768s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </Users/ryanbaker/cxxsaturdays/tex/fonts/JetBrainsMono-SemiBold.ttf></Users/ryan
 baker/cxxsaturdays/tex/fonts/JetBrainsMono-Regular.ttf>{/usr/local/texlive/2024/

@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2024.12.24)  5 APR 2025 17:53
+This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2024.12.24)  6 APR 2025 13:35
  restricted system commands enabled.
 **type-safety.tex
 (./type-safety.tex
@@ -1723,7 +1723,7 @@ Here is how much of LuaTeX's memory you used:
    avail lists: 1:1,2:2848,3:492,4:1880,5:1381,6:77,7:6007,8:1,9:4405,10:9,11:30
 5
  51460 multiletter control sequences out of 65536+600000
- 101 fonts using 18760139 bytes
+ 101 fonts using 18760195 bytes
  118i,6n,136p,477b,2768s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </Users/ryanbaker/cxxsaturdays/tex/fonts/JetBrainsMono-SemiBold.ttf></Users/ryan
 baker/cxxsaturdays/tex/fonts/JetBrainsMono-Italic.ttf>{/usr/local/texlive/2024/t
@@ -1733,7 +1733,7 @@ ainsMono-Regular.ttf></usr/local/texlive/2024/texmf-dist/fonts/type1/arkandis/ba
 skervald/ybvb8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/arkandis/bas
 kervald/ybvr8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/arkandis/bask
 ervald/ybvri8a.pfb>
-Output written on type-safety.pdf (11 pages, 138244 bytes).
+Output written on type-safety.pdf (11 pages, 138289 bytes).
 
 PDF statistics: 82 PDF objects out of 1000 (max. 8388607)
  56 compressed objects within 1 object stream
