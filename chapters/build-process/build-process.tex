@@ -311,7 +311,7 @@ A proper approach to modular file structure is covered in $\S$ \ref{sec:header-f
 \noindent
 Header files are commonly used in C++ to organize code, especially in larger projects.
 Their primary role is to \textbf{declare the interface} of a module or library, allowing for separation between the declaration of functionality and its implementation.
-However, there are no strict rules in C++ about what should or shouldn't go into a header file—it's mostly up to the developer or the project's conventions.
+However, there are no strict rules in C++ about what should or shouldn't go into a header file--it's mostly up to the developer or the project's conventions.
 Here's an example of a simple header file, \texttt{mylib.h}:
 
 \begin{cxx}{mylib.h}
@@ -411,7 +411,7 @@ The output of the preprocessing stage is known as a \textbf{translation unit}.
 A translation unit is the preprocessed result of a single source file, with all preprocessor directives recursively expanded.
 This means that a translation unit includes any files that have been included via \inlinecxx{#include}.
 As a result, the preprocessor's output is still valid C++ code.
-We can inspect the preprocessor's output by using the \texttt{-E} flag with \texttt{Clang}:
+We can inspect the preprocessor's output by using the \texttt{-E} flag with \texttt{Clang} or \texttt{g++}:
 
 \begin{cxx}{define.cpp}
 #include <iostream>
@@ -673,7 +673,7 @@ This machine code is what the CPU can directly execute.
 \noindent
 The compiler produces an \textbf{object file} as its output, typically with a \texttt{.o} or \texttt{.obj} extension on Unix-like systems.
 This object file contains machine code that the processor can understand, but it is not yet a complete executable program.
-To produce an object file, we can use the \texttt{-c} flag with \texttt{Clang}, instructing the compiler to compile the source file without linking:
+To produce an object file, we can use the \texttt{-c} flag with \texttt{Clang} and \texttt{g++}, instructing the compiler to compile the source file without linking:
 
 \begin{cxx}{main.cpp}
 int x { 401 };
@@ -720,7 +720,7 @@ From the output, we can recognize elements from our original C++ code:
 
 \noindent
 Understanding the symbol table gives insight into how the compiler translates C++ code into machine instructions before linking it into an executable.
-Instead of an object file, we can also generate \textbf{assembly code} using the \texttt{-S} flag with \texttt{Clang}:
+Instead of an object file, we can also generate \textbf{assembly code} using the \texttt{-S} flag with \texttt{Clang} and \texttt{g++}:
 
 \begin{terminal}
 $ clang++ -std=c++23 -S main.cpp

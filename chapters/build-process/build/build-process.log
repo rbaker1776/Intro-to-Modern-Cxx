@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2024.12.24)  6 APR 2025 13:51
+This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2024.12.24)  6 APR 2025 14:35
  restricted system commands enabled.
 **build-process.tex
 (./build-process.tex
@@ -1711,23 +1711,14 @@ LaTeX Font Info:    Font shape `TU/JetBrainsMono(0)/m/it' will be
  (./build/build-process.listing)
 \openout5 = build-process.listing
 
-(./build/build-process.listing) [9
-Missing character: There is no — (U+2014) in font ybvr8t!
-]
-\openout5 = build-process.listing
- (./build/build-process.listing)
-\openout5 = build-process.listing
- (./build/build-process.listing)
-\openout5 = build-process.listing
-
-(./build/build-process.listing) [10]
+(./build/build-process.listing) [9]
 \openout5 = build-process.listing
  (./build/build-process.listing)
 \openout5 = build-process.listing
 
 (./build/build-process.listing)
 \openout5 = build-process.listing
- (./build/build-process.listing) [11] [12]
+ (./build/build-process.listing) [10]
 \openout5 = build-process.listing
 
 (./build/build-process.listing)
@@ -1735,14 +1726,22 @@ Missing character: There is no — (U+2014) in font ybvr8t!
  (./build/build-process.listing)
 \openout5 = build-process.listing
 
-(./build/build-process.listing) [13]
+(./build/build-process.listing) [11] [12]
 \openout5 = build-process.listing
  (./build/build-process.listing)
 \openout5 = build-process.listing
 
 (./build/build-process.listing)
 \openout5 = build-process.listing
- (./build/build-process.listing) [14]
+ (./build/build-process.listing) [13]
+\openout5 = build-process.listing
+
+(./build/build-process.listing)
+\openout5 = build-process.listing
+ (./build/build-process.listing)
+\openout5 = build-process.listing
+
+(./build/build-process.listing) [14]
 LaTeX Font Info:    Trying to load font information for TS1+ybv on input line 5
 61.
 
@@ -1835,7 +1834,7 @@ Here is how much of LuaTeX's memory you used:
    avail lists: 1:1,2:2354,3:843,4:1671,5:1344,6:156,7:5944,8:17,9:3713,10:14,11
 :453
  51631 multiletter control sequences out of 65536+600000
- 123 fonts using 20828571 bytes
+ 123 fonts using 20828795 bytes
  118i,15n,136p,479b,2768s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/baskervald/supp-ybv.enc}</Us
 ers/ryanbaker/cxxsaturdays/tex/fonts/JetBrainsMono-Italic.ttf></Users/ryanbaker/
@@ -1846,7 +1845,7 @@ cxxsaturdays/tex/fonts/JetBrainsMono-Regular.ttf>{/usr/local/texlive/2024/texmf-
 dist/fonts/enc/dvips/base/8r.enc}</usr/local/texlive/2024/texmf-dist/fonts/type1
 /arkandis/baskervald/ybvb8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/
 arkandis/baskervald/ybvr8a.pfb>
-Output written on build-process.pdf (23 pages, 918758 bytes).
+Output written on build-process.pdf (23 pages, 918853 bytes).
 
 PDF statistics: 131 PDF objects out of 1000 (max. 8388607)
  86 compressed objects within 1 object stream

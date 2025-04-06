@@ -1,6 +1,8 @@
+#include <iostream>
+
 #define X 350
 
 int main()
 {
-	int max { X };
+    std::cout << X << std::endl;
 }
