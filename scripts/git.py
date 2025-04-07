@@ -13,7 +13,7 @@ if __name__ == "__main__":
             commit_message = sys.argv[1]
         else:
             commit_message = "automated commit"
-        subprocess.run(["git", "-C", rootdir, "add", "."], check=True)
+        subprocess.run(["git", "-C", rootdir, "add", "--all", ":!*.mp4"], check=True)
         subprocess.run(["git", "-C", rootdir, "commit", "-m", commit_message], check=True)
         subprocess.run(["git", "-C", rootdir, "push"], check=True)
         print()
