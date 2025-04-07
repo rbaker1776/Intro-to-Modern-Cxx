@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2024.12.24)  6 APR 2025 14:35
+This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2024.12.24)  7 APR 2025 15:34
  restricted system commands enabled.
 **build-process.tex
 (./build-process.tex
@@ -1608,14 +1608,13 @@ LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
 (Font)                  OT1/cmss/bx/n --> TU/KpSans(0)/b/n on input line 5.
 LaTeX Info: Redefining \idotsint on input line 5.
-</Users/ryanbaker/Downloads/Gemini_Generated_Image_xs11vxxs11vxxs11 (1) (1).png
-, id=4, 698.21509pt x 281.57655pt>
-File: /Users/ryanbaker/Downloads/Gemini_Generated_Image_xs11vxxs11vxxs11 (1) (1
-).png Graphic file (type png)
-<use /Users/ryanbaker/Downloads/Gemini_Generated_Image_xs11vxxs11vxxs11 (1) (1)
-.png>
-Package luatex.def Info: /Users/ryanbaker/Downloads/Gemini_Generated_Image_xs11
-vxxs11vxxs11 (1) (1).png  used on input line 21.
+</Users/ryanbaker/cxxsaturdays/tex/images/logo.png, id=4, 698.21509pt x 281.576
+55pt>
+File: /Users/ryanbaker/cxxsaturdays/tex/images/logo.png Graphic file (type png)
+
+<use /Users/ryanbaker/cxxsaturdays/tex/images/logo.png>
+Package luatex.def Info: /Users/ryanbaker/cxxsaturdays/tex/images/logo.png  use
+d on input line 21.
 (luatex.def)             Requested size: 195.0pt x 78.63895pt.
 
 (./build/build-process.toc
@@ -1637,7 +1636,7 @@ LaTeX Font Info:    Font shape `TU/JetBrainsMono(0)/m/n' will be
  [1
 
 {/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map}</Users/ry
-anbaker/Downloads/Gemini_Generated_Image_xs11vxxs11vxxs11 (1) (1).png>]
+anbaker/cxxsaturdays/tex/images/logo.png>]
 LaTeX Font Info:    Trying to load font information for TU+ybv on input line 38
 .
 LaTeX Font Info:    No file TUybv.fd. on input line 38.
@@ -1826,15 +1825,15 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 (\end occurred when \ifx on line 4 was incomplete)
 
 Here is how much of LuaTeX's memory you used:
- 30748 strings out of 476447
+ 30750 strings out of 476447
  125011,1977958 words of node,token memory allocated
  730 words of node memory still in use:
    6 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 1 glyph, 8 attribute, 99 glue_spec,
  8 attribute_list, 2 write nodes
    avail lists: 1:1,2:2354,3:843,4:1671,5:1344,6:156,7:5944,8:17,9:3713,10:14,11
 :453
- 51631 multiletter control sequences out of 65536+600000
- 123 fonts using 20828795 bytes
+ 51633 multiletter control sequences out of 65536+600000
+ 123 fonts using 20828851 bytes
  118i,15n,136p,479b,2768s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/baskervald/supp-ybv.enc}</Us
 ers/ryanbaker/cxxsaturdays/tex/fonts/JetBrainsMono-Italic.ttf></Users/ryanbaker/

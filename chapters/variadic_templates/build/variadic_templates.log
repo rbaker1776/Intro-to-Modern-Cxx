@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2024.12.24)  6 APR 2025 13:35
+This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2024.12.24)  7 APR 2025 15:34
  restricted system commands enabled.
 **variadic_templates.tex
 (./variadic_templates.tex
@@ -1543,11 +1543,11 @@ JetBrainsMono-Italic.ttf]:mode=base;script=latn;language=dflt;"
 
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
 (Font)                  OT1/cmtt/m/n --> TU/JetBrainsMono(1)/m/n on input line 
-32.
+33.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 (Font)                  OT1/cmtt/m/n --> TU/JetBrainsMono(1)/b/n on input line 
-32.
-LaTeX Font Info:    Trying to load font information for T1+ybv on input line 32
+33.
+LaTeX Font Info:    Trying to load font information for T1+ybv on input line 33
 .
 
 (/usr/local/texlive/2024/texmf-dist/tex/latex/baskervald/t1ybv.fd
@@ -1660,14 +1660,14 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 (\end occurred when \ifx on line 4 was incomplete)
 
 Here is how much of LuaTeX's memory you used:
- 29836 strings out of 476447
+ 29838 strings out of 476447
  100000,1977958 words of node,token memory allocated
  721 words of node memory still in use:
    6 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 1 glyph, 7 attribute, 98 glue_spec,
  7 attribute_list, 2 write nodes
    avail lists: 1:1,2:711,3:59,4:866,5:886,6:40,7:3018,9:2080,10:4,11:158
- 51166 multiletter control sequences out of 65536+600000
- 85 fonts using 17030755 bytes
+ 51168 multiletter control sequences out of 65536+600000
+ 85 fonts using 17030867 bytes
  118i,5n,131p,484b,2768s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </Users/ryanbaker/cxxsaturdays/tex/fonts/JetBrainsMono-Regular.ttf>{/usr/local/t
 exlive/2024/texmf-dist/fonts/enc/dvips/baskervald/supp-ybv.enc}{/usr/local/texli

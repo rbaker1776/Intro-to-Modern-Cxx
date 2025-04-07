@@ -209,6 +209,30 @@
 
 
 % ----------------------------------------------------------------------------------------------------------------------
+% NOTE STYLE
+% ----------------------------------------------------------------------------------------------------------------------
+
+\newenvironment{note}
+{
+    \begin{mdframed}
+    [
+        linecolor=MidnightBlue,
+        linewidth=3pt,
+        backgroundcolor=MidnightBlue!10,
+        topline=false, rightline=false, bottomline=false,
+        innertopmargin=8pt,
+        innerbottommargin=8pt,
+        innerrightmargin=15pt,
+        innerleftmargin=12pt,
+        %font=\color{CadetBlue!160},
+    ]
+}
+{
+    \end{mdframed}
+}
+
+
+% ----------------------------------------------------------------------------------------------------------------------
 % INLINE CODE COMMANDS
 % ----------------------------------------------------------------------------------------------------------------------
 
