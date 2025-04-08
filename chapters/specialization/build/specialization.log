@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2024.12.24)  7 APR 2025 15:34
+This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2024.12.24)  8 APR 2025 11:14
  restricted system commands enabled.
 **specialization.tex
 (./specialization.tex
@@ -1750,7 +1750,7 @@ Here is how much of LuaTeX's memory you used:
    avail lists: 1:1,2:1777,3:191,4:2239,5:1964,6:69,7:5006,8:1,9:5340,10:11,11:2
 16
  51300 multiletter control sequences out of 65536+600000
- 86 fonts using 17310075 bytes
+ 86 fonts using 17310019 bytes
  118i,6n,131p,480b,2768s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </Users/ryanbaker/cxxsaturdays/tex/fonts/JetBrainsMono-SemiBold.ttf></usr/local/
 texlive/2024/texmf-dist/fonts/opentype/public/kpfonts-otf/KpMath-Regular.otf></U

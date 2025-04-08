@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2024.12.24)  7 APR 2025 15:34
+This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2024.12.24)  8 APR 2025 11:14
  restricted system commands enabled.
 **pointers.tex
 (./pointers.tex
@@ -1740,7 +1740,7 @@ Here is how much of LuaTeX's memory you used:
  730 words of node memory still in use:
    6 hlist, 2 vlist, 2 rule, 2 glue, 4 kern, 1 glyph, 8 attribute, 99 glue_spec,
  8 attribute_list, 2 write nodes
-   avail lists: 1:1,2:2251,3:850,4:1742,5:1343,6:62,7:6313,8:21,9:3317,10:12,11:
+   avail lists: 1:1,2:2251,3:850,4:1742,5:1343,6:62,7:6311,8:21,9:3317,10:12,11:
 346
  51490 multiletter control sequences out of 65536+600000
  141 fonts using 28144479 bytes
@@ -1753,7 +1753,7 @@ saturdays/tex/fonts/JetBrainsMono-Regular.ttf>{/usr/local/texlive/2024/texmf-dis
 t/fonts/enc/dvips/base/8r.enc}</usr/local/texlive/2024/texmf-dist/fonts/type1/ar
 kandis/baskervald/ybvb8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/ark
 andis/baskervald/ybvr8a.pfb>
-Output written on pointers.pdf (10 pages, 872096 bytes).
+Output written on pointers.pdf (10 pages, 872121 bytes).
 
 PDF statistics: 82 PDF objects out of 1000 (max. 8388607)
  53 compressed objects within 1 object stream

@@ -1,0 +1,6 @@
+https://cs61.seas.harvard.edu/site/2018/Datarep4/
+https://en.cppreference.com/w/cpp/language/pointer
+https://en.cppreference.com/w/cpp/language/operator_arithmetic
+https://www.learncpp.com/cpp-tutorial/pointer-arithmetic-and-subscripting/
+https://news.ycombinator.com/item?id=4374598
+https://pvs-studio.com/en/blog/posts/cpp/1199/

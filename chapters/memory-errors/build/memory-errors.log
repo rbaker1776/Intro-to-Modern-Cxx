@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2024.12.24)  7 APR 2025 15:34
+This is LuaHBTeX, Version 1.18.0 (TeX Live 2024)  (format=lualatex 2024.12.24)  8 APR 2025 11:14
  restricted system commands enabled.
 **memory-errors.tex
 (./memory-errors.tex
@@ -1678,7 +1678,7 @@ Here is how much of LuaTeX's memory you used:
  7 attribute_list, 2 write nodes
    avail lists: 1:1,2:1305,3:473,4:826,5:775,6:52,7:4115,8:1,9:1876,10:8,11:223
  51328 multiletter control sequences out of 65536+600000
- 100 fonts using 18697523 bytes
+ 100 fonts using 18697635 bytes
  118i,6n,134p,479b,2768s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </Users/ryanbaker/cxxsaturdays/tex/fonts/JetBrainsMono-SemiBold.ttf></Users/ryan
 baker/cxxsaturdays/tex/fonts/JetBrainsMono-Regular.ttf></Users/ryanbaker/cxxsatu
